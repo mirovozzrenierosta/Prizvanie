@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Поиск призвания | mirovozzrenierosta — Понять себя — изменить всё</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1C2B5E;
+  --navy-dark:#121d42;
+  --navy-mid:#2D4080;
+  --gold:#C9A227;
+  --gold-light:#E8CC78;
+  --gold-pale:#FBF3DB;
+  --white:#FFFFFF;
+  --off-white:#F7F6F2;
+  --gray-100:#EEECEA;
+  --gray-300:#CCCCCC;
+  --gray-400:#9B9B9B;
+  --gray-700:#3D3D3D;
+  --text-dark:#1A1A2E;
+  --font-display:'Playfair Display',Georgia,serif;
+  --font-body:'Montserrat',system-ui,sans-serif;
+  --max-w:1200px;
+  --py:96px;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);color:var(--text-dark);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--font-display);line-height:1.2}
+img{display:block;max-width:100%}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 28px}
+
+/* ── NAV ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:22px 0;transition:background .3s,padding .3s,box-shadow .3s}
+.nav.scrolled{background:rgba(18,29,66,.97);backdrop-filter:blur(14px);box-shadow:0 2px 24px rgba(0,0,0,.22);padding:14px 0}
+.nav__inner{display:flex;align-items:center;justify-content:space-between}
+.nav__logo{font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--white);text-decoration:none;letter-spacing:.02em}
+.nav__logo span{color:var(--gold)}
+.nav__links{display:flex;gap:32px;list-style:none}
+.nav__links a{font-size:12px;font-weight:600;color:rgba(255,255,255,.75);text-decoration:none;letter-spacing:.07em;text-transform:uppercase;transition:color .2s}
+.nav__links a:hover{color:var(--gold)}
+.nav__cta{background:var(--gold);color:var(--navy);font-family:var(--font-body);font-size:12px;font-weight:700;text-decoration:none;padding:11px 26px;letter-spacing:.07em;text-transform:uppercase;transition:background .2s,transform .2s}
+.nav__cta:hover{background:var(--gold-light);transform:translateY(-1px)}
+
+/* ── HERO ── */
+.hero{min-height:100vh;background:var(--navy);position:relative;display:flex;align-items:center;overflow:hidden;padding:100px 0 80px}
+.hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 68% 50%,rgba(201,162,39,.09) 0%,transparent 58%),linear-gradient(135deg,rgba(255,255,255,.015) 25%,transparent 25%),linear-gradient(-135deg,rgba(255,255,255,.015) 25%,transparent 25%);background-size:auto,56px 56px,56px 56px}
+.hero__grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;position:relative;z-index:1;width:100%}
+.hero__eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:28px}
+.hero__eyebrow::before{content:'';display:block;width:32px;height:1px;background:var(--gold)}
+h1.hero__title{font-size:clamp(38px,4.8vw,64px);font-weight:700;color:var(--white);line-height:1.08;margin-bottom:6px}
+h1.hero__title em{font-style:italic;color:var(--gold)}
+.hero__sub{font-size:clamp(15px,1.6vw,19px);font-weight:300;color:rgba(255,255,255,.65);margin-bottom:40px;line-height:1.55;max-width:520px}
+.hero__sub strong{color:var(--white);font-weight:600}
+.hero__stats{display:flex;gap:36px;margin-bottom:48px;flex-wrap:wrap}
+.stat-num{font-family:var(--font-display);font-size:30px;font-weight:700;color:var(--gold);display:block;line-height:1;margin-bottom:4px}
+.stat-lbl{font-size:11px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.08em}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 36px;font-family:var(--font-body);font-size:13px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;text-decoration:none;cursor:pointer;border:none;transition:all .2s}
+.btn--gold{background:var(--gold);color:var(--navy)}
+.btn--gold:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 10px 28px rgba(201,162,39,.32)}
+.btn--outline{background:transparent;color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.25);margin-left:14px}
+.btn--outline:hover{border-color:var(--gold);color:var(--gold)}
+.btn__arr{font-size:17px;transition:transform .2s}
+.btn:hover .btn__arr{transform:translateX(4px)}
+
+/* ── DIAGNOSTIC CARD ── */
+.diag-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);padding:40px;backdrop-filter:blur(8px)}
+.diag__head{display:flex;align-items:center;justify-content:space-between;margin-bottom:34px}
+.diag__label{font-size:12px;font-weight:700;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.1em}
+.diag__live{display:flex;align-items:center;gap:7px;font-size:11px;color:#4caf50;font-weight:700}
+.diag__dot{width:7px;height:7px;border-radius:50%;background:#4caf50;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.mrow{margin-bottom:22px}
+.mrow__top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.mrow__name{font-size:13px;font-weight:500;color:rgba(255,255,255,.82)}
+.mrow__pct{font-family:var(--font-display);font-size:14px;color:var(--gold);font-weight:600}
+.mbar{height:5px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden}
+.mbar__fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:3px;width:0%;transition:width 1.5s cubic-bezier(.4,0,.2,1)}
+.diag__foot{margin-top:30px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between}
+.diag__arch-lbl{font-size:10px;color:rgba(255,255,255,.38);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px}
+.diag__arch{font-family:var(--font-display);font-size:20px;font-style:italic;color:var(--white);font-weight:600}
+.diag__badge{font-size:10px;font-weight:700;color:var(--navy);background:var(--gold);padding:6px 14px;letter-spacing:.07em;text-transform:uppercase}
+
+/* ── SECTION COMMONS ── */
+.s-eyebrow{font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);display:inline-flex;align-items:center;gap:10px;margin-bottom:18px}
+.s-eyebrow::before{content:'';display:inline-block;width:26px;height:1px;background:var(--gold)}
+.s-title{font-size:clamp(26px,3.4vw,44px);font-weight:700;color:var(--navy);line-height:1.2;margin-bottom:16px}
+.s-lead{font-size:16px;color:var(--gray-700);line-height:1.65;max-width:620px;font-weight:400}
+.s-head{margin-bottom:60px}
+.s-head--center{text-align:center}
+.s-head--center .s-eyebrow{justify-content:center}
+.s-head--center .s-lead{margin:0 auto}
+
+/* ── PROBLEMS ── */
+.problems{padding:var(--py) 0;background:var(--off-white)}
+.prob-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.prob-card{background:var(--white);border:1px solid var(--gray-100);padding:36px 30px;position:relative;transition:box-shadow .2s,transform .2s}
+.prob-card:hover{box-shadow:0 14px 44px rgba(28,43,94,.09);transform:translateY(-4px)}
+.prob-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold);opacity:0;transition:opacity .2s}
+.prob-card:hover::before{opacity:1}
+.prob-icon{font-size:34px;margin-bottom:18px}
+.prob-title{font-family:var(--font-display);font-size:19px;font-weight:700;color:var(--navy);margin-bottom:10px;line-height:1.3}
+.prob-text{font-size:13.5px;line-height:1.7;color:var(--gray-700)}
+
+/* ── HOW ── */
+.how{padding:var(--py) 0;background:var(--navy)}
+.how .s-title{color:var(--white)}
+.how .s-lead{color:rgba(255,255,255,.55)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-top:64px;position:relative}
+.steps::after{content:'';position:absolute;top:31px;left:calc(12.5% + 24px);right:calc(12.5% + 24px);height:1px;background:linear-gradient(90deg,transparent,rgba(201,162,39,.35),rgba(201,162,39,.35),transparent)}
+.step{text-align:center;position:relative}
+.step__num{width:62px;height:62px;border-radius:50%;background:rgba(201,162,39,.08);border:1px solid rgba(201,162,39,.25);display:flex;align-items:center;justify-content:center;margin:0 auto 22px;font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--gold);position:relative;z-index:1;transition:background .3s,border-color .3s}
+.step:hover .step__num{background:rgba(201,162,39,.18);border-color:var(--gold)}
+.step__title{font-family:var(--font-display);font-size:17px;font-weight:700;color:var(--white);margin-bottom:10px}
+.step__text{font-size:13px;color:rgba(255,255,255,.45);line-height:1.65}
+
+/* ── MATRICES ── */
+.matrices{padding:var(--py) 0;background:var(--white)}
+.mat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.mat-card{background:var(--off-white);border:1px solid var(--gray-100);padding:36px 30px;transition:all .25s}
+.mat-card:hover{box-shadow:0 10px 36px rgba(28,43,94,.1)}
+.mat-card--wide{grid-column:span 2;background:var(--navy)}
+.mat-icon{width:48px;height:48px;background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.25);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:22px}
+.mat-card--wide .mat-icon{background:rgba(201,162,39,.12)}
+.mat-tag{font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.mat-title{font-family:var(--font-display);font-size:21px;font-weight:700;color:var(--navy);margin-bottom:10px;line-height:1.3}
+.mat-card--wide .mat-title{color:var(--white)}
+.mat-text{font-size:13.5px;color:var(--gray-700);line-height:1.7}
+.mat-card--wide .mat-text{color:rgba(255,255,255,.58)}
+
+/* ── STATS BAR ── */
+.stats-bar{padding:76px 0;background:var(--gold)}
+.stats-bar__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;text-align:center}
+.stats-big{font-family:var(--font-display);font-size:52px;font-weight:700;color:var(--navy);line-height:1;display:block;margin-bottom:8px}
+.stats-lbl{font-size:12px;font-weight:600;color:rgba(28,43,94,.6);text-transform:uppercase;letter-spacing:.09em}
+
+/* ── PRICING ── */
+.pricing{padding:var(--py) 0;background:var(--off-white)}
+.price-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;align-items:start}
+.p-card{background:var(--white);border:1px solid var(--gray-100);padding:34px 26px;position:relative;transition:box-shadow .2s}
+.p-card--featured{background:var(--navy);border-color:var(--navy);transform:scale(1.04);box-shadow:0 22px 64px rgba(28,43,94,.28)}
+.p-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--navy);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:5px 16px;white-space:nowrap}
+.p-tier{font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.p-name{font-family:var(--font-display);font-size:24px;font-weight:700;color:var(--navy);margin-bottom:6px}
+.p-card--featured .p-name{color:var(--white)}
+.p-price{font-family:var(--font-display);font-size:34px;font-weight:700;color:var(--navy);line-height:1;margin-bottom:6px}
+.p-card--featured .p-price{color:var(--gold)}
+.p-price sup{font-size:16px;vertical-align:super;font-weight:400}
+.p-price-note{font-size:12px;font-weight:400;color:var(--gray-400);font-family:var(--font-body)}
+.p-card--featured .p-price-note{color:rgba(255,255,255,.35)}
+.p-desc{font-size:12.5px;color:var(--gray-700);margin:18px 0;padding-bottom:18px;border-bottom:1px solid var(--gray-100);line-height:1.6;min-height:58px}
+.p-card--featured .p-desc{color:rgba(255,255,255,.55);border-bottom-color:rgba(255,255,255,.1)}
+.p-feats{list-style:none;margin-bottom:28px}
+.p-feats li{font-size:12.5px;color:var(--gray-700);padding:6px 0;display:flex;gap:10px;align-items:flex-start;line-height:1.5}
+.p-card--featured .p-feats li{color:rgba(255,255,255,.72)}
+.p-feats li::before{content:'✓';color:var(--gold);font-weight:700;flex-shrink:0;margin-top:1px}
+.p-cta{display:block;text-align:center;padding:13px;font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;text-decoration:none;transition:all .2s;border:1px solid var(--navy);color:var(--navy);background:transparent}
+.p-card--featured .p-cta{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.p-cta:hover{background:var(--navy);color:var(--white)}
+.p-card--featured .p-cta:hover{background:var(--gold-light);border-color:var(--gold-light)}
+.price-note{text-align:center;margin-top:36px;font-size:13px;color:var(--gray-400)}
+.price-note a{color:var(--navy);font-weight:600}
+
+/* ── HR ── */
+.hr{padding:var(--py) 0;background:var(--white)}
+.hr__grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.hr-steps{margin-top:40px;display:flex;flex-direction:column;gap:24px}
+.hr-step{display:flex;gap:22px;align-items:flex-start}
+.hr-step__n{width:40px;height:40px;background:var(--navy);color:var(--white);font-family:var(--font-display);font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hr-step__t{font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--navy);margin-bottom:5px}
+.hr-step__d{font-size:13px;color:var(--gray-700);line-height:1.6}
+.partners-box{background:var(--off-white);border:1px solid var(--gray-100);padding:40px}
+.partners-box h3{font-family:var(--font-display);font-size:21px;color:var(--navy);margin-bottom:8px}
+.partners-box p{font-size:13px;color:var(--gray-700);margin-bottom:26px;line-height:1.6}
+.ptags{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ptag{font-size:12px;font-weight:600;background:var(--white);border:1px solid var(--gray-100);padding:8px 12px;color:var(--navy);display:flex;align-items:center;gap:8px}
+.ptag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.partners-note{margin-top:20px;padding:18px 20px;background:var(--navy);font-size:12.5px;line-height:1.6;color:rgba(255,255,255,.65)}
+.partners-note strong{color:var(--gold)}
+
+/* ── CTA FINAL ── */
+.final-cta{padding:120px 0;background:var(--navy);text-align:center;position:relative;overflow:hidden}
+.final-cta::before{content:'';position:absolute;top:-50%;left:50%;transform:translateX(-50%);width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,39,.09) 0%,transparent 70%);pointer-events:none}
+.fcta__eyebrow{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:22px}
+.fcta__title{font-size:clamp(30px,4vw,54px);font-weight:700;color:var(--white);max-width:680px;margin:0 auto 18px;line-height:1.18}
+.fcta__title em{font-style:italic;color:var(--gold)}
+.fcta__sub{font-size:15px;color:rgba(255,255,255,.55);max-width:480px;margin:0 auto 48px;line-height:1.6}
+.fcta__micro{font-size:12px;color:rgba(255,255,255,.3);margin-top:16px;letter-spacing:.06em}
+
+/* ── FOOTER ── */
+.footer{background:var(--navy-dark);padding:64px 0 30px;color:rgba(255,255,255,.45)}
+.footer__grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:64px;margin-bottom:48px}
+.footer__brand{font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--white);margin-bottom:10px}
+.footer__brand span{color:var(--gold)}
+.footer__slogan{font-size:12px;font-style:italic;color:rgba(255,255,255,.35);margin-bottom:16px}
+.footer__about{font-size:13px;line-height:1.7;max-width:280px}
+.footer__col-head{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.13em;color:var(--gold);margin-bottom:18px}
+.footer__links{list-style:none;display:flex;flex-direction:column;gap:11px}
+.footer__links a{font-size:13px;color:rgba(255,255,255,.45);text-decoration:none;transition:color .2s}
+.footer__links a:hover{color:var(--gold)}
+.footer__bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:22px;display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.footer__tg{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s}
+.footer__tg:hover{color:var(--gold)}
+
+/* ── REVEAL ANIMATION ── */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  .hero__grid{grid-template-columns:1fr;gap:48px}
+  .diag-card{max-width:520px}
+  .prob-grid{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr 1fr;gap:44px}
+  .steps::after{display:none}
+  .price-grid{grid-template-columns:1fr 1fr}
+  .p-card--featured{transform:none;box-shadow:0 12px 40px rgba(28,43,94,.2)}
+  .stats-bar__grid{grid-template-columns:1fr 1fr;gap:40px}
+  .hr__grid{grid-template-columns:1fr;gap:48px}
+  .footer__grid{grid-template-columns:1fr 1fr;gap:40px}
+  .nav__links{display:none}
+  .mat-grid{grid-template-columns:1fr}
+  .mat-card--wide{grid-column:auto}
+}
+@media(max-width:640px){
+  :root{--py:64px}
+  .prob-grid,.price-grid{grid-template-columns:1fr}
+  .stats-bar__grid{grid-template-columns:1fr 1fr}
+  .footer__grid{grid-template-columns:1fr;gap:32px}
+  .footer__bottom{flex-direction:column;gap:12px;text-align:center}
+  .hero__stats{gap:24px}
+  .nav__cta{display:none}
+  .btn--outline{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav class="nav" id="nav">
+  <div class="container">
+    <div class="nav__inner">
+      <a href="#" class="nav__logo">mirovozzrenie<span>rosta</span></a>
+      <ul class="nav__links">
+        <li><a href="#how">Как работает</a></li>
+        <li><a href="#matrices">Методология</a></li>
+        <li><a href="#pricing">Тарифы</a></li>
+        <li><a href="#hr">Для бизнеса</a></li>
+      </ul>
+      <a href="#start" class="nav__cta">Пройти диагностику</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero" id="start">
+  <div class="container">
+    <div class="hero__grid">
+      <div>
+        <div class="hero__eyebrow">Платформа профессиональной диагностики</div>
+        <h1 class="hero__title">
+          Найди своё<br><em>призвание.</em><br>Перестань угадывать.
+        </h1>
+        <p class="hero__sub">
+          Автоматизированная психологическая диагностика разрушает <strong>невидимый потолок</strong> — и показывает точный вектор карьерной трансформации.
+        </p>
+        <div class="hero__stats">
+          <div><span class="stat-num">200</span><span class="stat-lbl">вопросов</span></div>
+          <div><span class="stat-num">5</span><span class="stat-lbl">матриц</span></div>
+          <div><span class="stat-num">5 мин</span><span class="stat-lbl">до отчёта</span></div>
+          <div><span class="stat-num">10+</span><span class="stat-lbl">страниц PDF</span></div>
+        </div>
+        <a href="#" class="btn btn--gold">Пройти диагностику <span class="btn__arr">→</span></a>
+        <a href="#how" class="btn btn--outline">Узнать больше</a>
+      </div>
+
+      <!-- SIGNATURE ELEMENT: animated live diagnostic card -->
+      <div class="diag-card" id="diagCard">
+        <div class="diag__head">
+          <span class="diag__label">Анализ профиля</span>
+          <div class="diag__live"><div class="diag__dot"></div>Live-генерация</div>
+        </div>
+        <div class="mrow">
+          <div class="mrow__top"><span class="mrow__name">Матрица ценностей</span><span class="mrow__pct" id="p1">0%</span></div>
+          <div class="mbar"><div class="mbar__fill" id="b1" data-t="82"></div></div>
+        </div>
+        <div class="mrow">
+          <div class="mrow__top"><span class="mrow__name">Психофизиотип</span><span class="mrow__pct" id="p2">0%</span></div>
+          <div class="mbar"><div class="mbar__fill" id="b2" data-t="91"></div></div>
+        </div>
+        <div class="mrow">
+          <div class="mrow__top"><span class="mrow__name">Архетипы и роли</span><span class="mrow__pct" id="p3">0%</span></div>
+          <div class="mbar"><div class="mbar__fill" id="b3" data-t="67"></div></div>
+        </div>
+        <div class="mrow">
+          <div class="mrow__top"><span class="mrow__name">Внутренние барьеры</span><span class="mrow__pct" id="p4">0%</span></div>
+          <div class="mbar"><div class="mbar__fill" id="b4" data-t="43"></div></div>
+        </div>
+        <div class="mrow">
+          <div class="mrow__top"><span class="mrow__name">Интегративная матрица</span><span class="mrow__pct" id="p5">0%</span></div>
+          <div class="mbar"><div class="mbar__fill" id="b5" data-t="88"></div></div>
+        </div>
+        <div class="diag__foot">
+          <div>
+            <div class="diag__arch-lbl">Ведущий архетип</div>
+            <div class="diag__arch">Стратег-Мудрец</div>
+          </div>
+          <div class="diag__badge">Жёлтый уровень</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROBLEMS ─── -->
+<section class="problems" id="problems">
+  <div class="container">
+    <div class="s-head">
+      <div class="s-eyebrow reveal">Для кого это</div>
+      <h2 class="s-title reveal">Узнаёшь себя?</h2>
+      <p class="s-lead reveal">Большинство людей застревают не от недостатка усилий — а от отсутствия системного понимания своей природы.</p>
+    </div>
+    <div class="prob-grid">
+      <div class="prob-card reveal">
+        <div class="prob-icon">🔥</div>
+        <h3 class="prob-title">Выгорание на текущем месте</h3>
+        <p class="prob-text">Работа не приносит удовлетворения, энергия уходит, результаты не вдохновляют. Понимаешь, что это не твоё — но не знаешь, что твоё.</p>
+      </div>
+      <div class="prob-card reveal d1">
+        <div class="prob-icon">🪞</div>
+        <h3 class="prob-title">Синдром самозванца</h3>
+        <p class="prob-text">Успехи есть, но ощущение «меня разоблачат» не уходит. Страх двигаться дальше маскируется под «реализм» и «скромность».</p>
+      </div>
+      <div class="prob-card reveal d2">
+        <div class="prob-icon">🧱</div>
+        <h3 class="prob-title">Невидимый потолок</h3>
+        <p class="prob-text">Доход и уровень позиции застыли. Что ни делай — ощущение, что топчешься на месте. Потолок есть, но где он — непонятно.</p>
+      </div>
+      <div class="prob-card reveal d1">
+        <div class="prob-icon">🔀</div>
+        <h3 class="prob-title">Карьерный перекрёсток</h3>
+        <p class="prob-text">Хочется сменить сферу, но нет уверенности в новом направлении. Угадывать слишком дорого — нужна объективная диагностика.</p>
+      </div>
+      <div class="prob-card reveal d2">
+        <div class="prob-icon">⛽</div>
+        <h3 class="prob-title">«Не то топливо»</h3>
+        <p class="prob-text">Нельзя заправлять автомобиль не тем топливом. Так же нельзя заниматься тем, от чего выгораешь. Твой потенциал требует другой сферы.</p>
+      </div>
+      <div class="prob-card reveal d3">
+        <div class="prob-icon">🧭</div>
+        <h3 class="prob-title">«Сбитый лётчик»</h3>
+        <p class="prob-text">После неудачи, сокращения или краха проекта — непонятно, с чего начать заново. Нужна система, а не мотивационные цитаты.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── HOW IT WORKS ─── -->
+<section class="how" id="how">
+  <div class="container">
+    <div class="s-head">
+      <div class="s-eyebrow reveal">Технология</div>
+      <h2 class="s-title reveal">Как работает платформа</h2>
+      <p class="s-lead reveal">Четыре шага от первого контакта до персонального плана карьерной трансформации.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step__num">01</div>
+        <h3 class="step__title">Регистрация</h3>
+        <p class="step__text">Описываете запрос, оставляете контакты. Данные защищены соглашением о конфиденциальности.</p>
+      </div>
+      <div class="step reveal d1">
+        <div class="step__num">02</div>
+        <h3 class="step__title">Диагностика</h3>
+        <p class="step__text">До 200 вопросов «да / нет». Адаптивный интерфейс для ПК и мобильных. Прогресс сохраняется автоматически.</p>
+      </div>
+      <div class="step reveal d2">
+        <div class="step__num">03</div>
+        <h3 class="step__title">Отчёт за 5 минут</h3>
+        <p class="step__text">Алгоритм обрабатывает 5 матриц и отправляет персональный PDF от 10 страниц прямо на e-mail.</p>
+      </div>
+      <div class="step reveal d3">
+        <div class="step__num">04</div>
+        <h3 class="step__title">Стратегическая сессия</h3>
+        <p class="step__text">Эксперт разбирает отчёт, устраняет барьеры и фиксирует план карьерной трансформации с конкретными шагами.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MATRICES ─── -->
+<section class="matrices" id="matrices">
+  <div class="container">
+    <div class="s-head">
+      <div class="s-eyebrow reveal">Методология</div>
+      <h2 class="s-title reveal">Пять матриц анализа</h2>
+      <p class="s-lead reveal">Интегративная диагностика на основе четырёх независимых психологических систем. Точность, недостижимая ни одним инструментом по отдельности.</p>
+    </div>
+    <div class="mat-grid">
+      <div class="mat-card mat-card--wide reveal">
+        <div class="mat-icon">🌀</div>
+        <div class="mat-tag">Матрицы 1 + 5</div>
+        <h3 class="mat-title">Ценности + Интегративная матрица призвания</h3>
+        <p class="mat-text">Спиральная динамика определяет доминирующую систему ценностей и мотивационные драйверы — Синий (стабильность), Оранжевый (результат), Зелёный (наставничество), Жёлтый (свобода и смыслы). Итоговая матрица пересекает все пять блоков и выдаёт единственную точную рекомендацию о траектории развития клиента с конкретными примерами профессий и ролей.</p>
+      </div>
+      <div class="mat-card reveal d1">
+        <div class="mat-icon">🧬</div>
+        <div class="mat-tag">Матрица 2</div>
+        <h3 class="mat-title">Психофизиологический потенциал</h3>
+        <p class="mat-text">Четыре вектора природного потенциала — интеллектуальный, управляющий, коммерческий, исполнительский — по Ведическим психофизиотипам и 7 Радикалам Пономаренко.</p>
+      </div>
+      <div class="mat-card reveal d2">
+        <div class="mat-icon">🎭</div>
+        <div class="mat-tag">Матрица 3</div>
+        <h3 class="mat-title">Архетипы и роли PAEI</h3>
+        <p class="mat-text">Ведущий архетип (Мастер, Правитель, Искатель, Мудрец) + управленческий профиль Адизеса PAEI — идеальная командная роль.</p>
+      </div>
+      <div class="mat-card reveal d3">
+        <div class="mat-icon">🛡️</div>
+        <div class="mat-tag">Матрица 4</div>
+        <h3 class="mat-title">Внутренние барьеры</h3>
+        <p class="mat-text">Диагностика синдрома самозванца, дефицитарного мышления и финансовых паттернов. Показывает, что именно блокирует рост — чтобы это проработать.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── STATS ─── -->
+<section class="stats-bar">
+  <div class="container">
+    <div class="stats-bar__grid">
+      <div class="reveal"><span class="stats-big">200</span><span class="stats-lbl">Диагностических вопросов</span></div>
+      <div class="reveal d1"><span class="stats-big">5</span><span class="stats-lbl">Психологических матриц</span></div>
+      <div class="reveal d2"><span class="stats-big">≤5</span><span class="stats-lbl">Минут до отчёта на e-mail</span></div>
+      <div class="reveal d3"><span class="stats-big">10+</span><span class="stats-lbl">Страниц персонального PDF</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PRICING ─── -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="s-head s-head--center">
+      <div class="s-eyebrow reveal">Тарифы</div>
+      <h2 class="s-title reveal">Выберите уровень диагностики</h2>
+      <p class="s-lead reveal">От бесплатного экспресс-теста до полного VIP-сопровождения до результата.</p>
+    </div>
+    <div class="price-grid">
+      <div class="p-card reveal">
+        <div class="p-tier">Старт</div>
+        <div class="p-name">Лид-магнит</div>
+        <div class="p-price">Бесплатно</div>
+        <p class="p-desc">Экспресс-тест — первое знакомство с методологией и своим психопрофилем.</p>
+        <ul class="p-feats">
+          <li>Мини-диагностика 15–20 вопросов</li>
+          <li>Краткий результат по 2 шкалам</li>
+          <li>100% автоматически</li>
+          <li>Мотивация к развёрнутой диагностике</li>
+        </ul>
+        <a href="#" class="p-cta">Начать бесплатно</a>
+      </div>
+      <div class="p-card reveal d1">
+        <div class="p-tier">Базовый</div>
+        <div class="p-name">Трипваер</div>
+        <div class="p-price"><sup>₽</sup>990 <span class="p-price-note">разово</span></div>
+        <p class="p-desc">Расширенный автоматизированный отчёт. Ценность — сразу, без ожидания эксперта.</p>
+        <ul class="p-feats">
+          <li>Тест до 100 вопросов</li>
+          <li>Краткий отчёт по 3 матрицам</li>
+          <li>Автодоставка на e-mail за 5 мин</li>
+          <li>Без участия эксперта</li>
+        </ul>
+        <a href="#" class="p-cta">Выбрать тариф</a>
+      </div>
+      <div class="p-card p-card--featured reveal d2">
+        <div class="p-badge">Популярный</div>
+        <div class="p-tier">Основной</div>
+        <div class="p-name">Профи</div>
+        <div class="p-price"><sup>₽</sup>4&thinsp;900 <span class="p-price-note">разово</span></div>
+        <p class="p-desc">Полная диагностика и детальный отчёт по 5 матрицам — основа карьерной трансформации.</p>
+        <ul class="p-feats">
+          <li>Тест до 200 вопросов</li>
+          <li>Отчёт 10+ страниц по 5 матрицам</li>
+          <li>Автогенерация PDF/Word за 5 мин</li>
+          <li>Персональный архетип и рекомендации</li>
+          <li>Вектор для самостоятельной сессии</li>
+        </ul>
+        <a href="#" class="p-cta">Выбрать тариф</a>
+      </div>
+      <div class="p-card reveal d3">
+        <div class="p-tier">Максимум</div>
+        <div class="p-name">Премиум</div>
+        <div class="p-price"><sup>₽</sup>14&thinsp;900 <span class="p-price-note">разово</span></div>
+        <p class="p-desc">Полный отчёт + стратегическая сессия с экспертом-методологом один на один.</p>
+        <ul class="p-feats">
+          <li>Всё из тарифа «Профи»</li>
+          <li>Стратегическая сессия 60–90 мин</li>
+          <li>Разбор барьеров и конструирование плана</li>
+          <li>Протокол с конкретными шагами</li>
+          <li>Приоритетная поддержка</li>
+        </ul>
+        <a href="#" class="p-cta">Выбрать тариф</a>
+      </div>
+    </div>
+    <p class="price-note reveal">Также доступно <a href="#">VIP-сопровождение</a> — до закрепления на новом карьерном треке.</p>
+  </div>
+</section>
+
+<!-- ─── HR DIRECTION ─── -->
+<section class="hr" id="hr">
+  <div class="container">
+    <div class="hr__grid">
+      <div>
+        <div class="s-eyebrow reveal">B2B / HR-направление</div>
+        <h2 class="s-title reveal">«Трудись на лучшем месте для себя»</h2>
+        <p class="s-lead reveal">Подбираем кандидатам реальную работу в компаниях-партнёрах по психологическому профилю — не по резюме. Талант важнее опыта: опыт всегда можно наработать.</p>
+        <div class="hr-steps">
+          <div class="hr-step reveal">
+            <div class="hr-step__n">1</div>
+            <div>
+              <div class="hr-step__t">Анкета талантов</div>
+              <p class="hr-step__d">Кандидат описывает выдающиеся способности, навыки и склонности — всё, что выделяет его среди других.</p>
+            </div>
+          </div>
+          <div class="hr-step reveal d1">
+            <div class="hr-step__n">2</div>
+            <div>
+              <div class="hr-step__t">Тест Адизеса (PAEI)</div>
+              <p class="hr-step__d">Диагностика управленческого профиля: Производитель / Администратор / Предприниматель / Интегратор.</p>
+            </div>
+          </div>
+          <div class="hr-step reveal d2">
+            <div class="hr-step__n">3</div>
+            <div>
+              <div class="hr-step__t">Тест личных характеристик</div>
+              <p class="hr-step__d">Полная диагностика по методологии mirovozzrenierosta. Профиль сопоставляется с открытыми вакансиями сети.</p>
+            </div>
+          </div>
+        </div>
+        <a href="#" class="btn btn--gold" style="margin-top:40px;">Подключить HR-диагностику <span class="btn__arr">→</span></a>
+      </div>
+      <div class="partners-box reveal">
+        <h3>Партнёрская сеть СоюзШахты</h3>
+        <p>Реальные вакансии в реальных компаниях Ростовской области — для кандидатов с подтверждённым психологическим профилем.</p>
+        <div class="ptags">
+          <div class="ptag">Ракурс-Камни</div>
+          <div class="ptag">Лифт Диджитал</div>
+          <div class="ptag">IS4B-PRO</div>
+          <div class="ptag">ФерроПром-II</div>
+          <div class="ptag">Управа</div>
+          <div class="ptag">Империя Танцев</div>
+          <div class="ptag">Именные Вещи</div>
+          <div class="ptag">Друзья</div>
+          <div class="ptag">СпецТехника</div>
+          <div class="ptag">Тихий Дон</div>
+          <div class="ptag">С веслом</div>
+          <div class="ptag">Штаб</div>
+        </div>
+        <div class="partners-note">
+          <strong>Для работодателей:</strong> пакетная оценка персонала, аутплейсмент, программы удержания талантов и комплектация команд для новых проектов.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FINAL CTA ─── -->
+<section class="final-cta">
+  <div class="container">
+    <div class="fcta__eyebrow reveal">Понять себя — изменить всё</div>
+    <h2 class="fcta__title reveal">Готов узнать, где <em>твоё</em> место?</h2>
+    <p class="fcta__sub reveal">Пройди диагностику — и получи персональный аналитический профиль на e-mail через 5 минут.</p>
+    <a href="#" class="btn btn--gold reveal">Начать бесплатно <span class="btn__arr">→</span></a>
+    <p class="fcta__micro reveal">Лид-магнит — бесплатно. Без карты. Без обязательств.</p>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand">mirovozzrenie<span>rosta</span></div>
+        <div class="footer__slogan">Понять себя — изменить всё</div>
+        <p class="footer__about">Платформа автоматизированной психологической диагностики, карьерного консультирования и профессионального подбора персонала.</p>
+      </div>
+      <div>
+        <div class="footer__col-head">Платформа</div>
+        <ul class="footer__links">
+          <li><a href="#">Как работает</a></li>
+          <li><a href="#">5 матриц анализа</a></li>
+          <li><a href="#">Тарифы и цены</a></li>
+          <li><a href="#">VIP-сопровождение</a></li>
+          <li><a href="#">HR-направление</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer__col-head">Контакты</div>
+        <ul class="footer__links">
+          <li><a href="https://t.me/mirovozzrenierosta" target="_blank">Telegram-канал</a></li>
+          <li><a href="#">Пройти диагностику</a></li>
+          <li><a href="#">Для партнёров (B2B)</a></li>
+          <li><a href="#">Политика конфиденциальности</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2025 mirovozzrenierosta. Все права защищены.</span>
+      <a href="https://t.me/mirovozzrenierosta" target="_blank" class="footer__tg">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8l-1.68 7.91c-.12.57-.47.71-.95.44l-2.67-1.97-1.29 1.24c-.14.14-.27.27-.54.27l.19-2.74 4.97-4.49c.22-.19-.05-.3-.34-.11L7.82 14.3l-2.62-.82c-.57-.18-.58-.57.12-.84l10.26-3.96c.47-.17.89.12.71.12z"/></svg>
+        t.me/mirovozzrenierosta
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// NAV SCROLL
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+}, {passive: true});
+
+// SCROLL REVEAL
+const revealEls = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); revealObs.unobserve(e.target); }
+  });
+}, {threshold: 0.12, rootMargin: '0px 0px -36px 0px'});
+revealEls.forEach(el => revealObs.observe(el));
+
+// DIAGNOSTIC BARS ANIMATION
+const bars = [
+  {fill: document.getElementById('b1'), pct: document.getElementById('p1'), t: 82},
+  {fill: document.getElementById('b2'), pct: document.getElementById('p2'), t: 91},
+  {fill: document.getElementById('b3'), pct: document.getElementById('p3'), t: 67},
+  {fill: document.getElementById('b4'), pct: document.getElementById('p4'), t: 43},
+  {fill: document.getElementById('b5'), pct: document.getElementById('p5'), t: 88},
+];
+function countUp(el, target, duration) {
+  let start = null;
+  const step = ts => {
+    if (!start) start = ts;
+    const progress = Math.min((ts - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(eased * target) + '%';
+    if (progress < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+function animateBars() {
+  bars.forEach((bar, i) => {
+    setTimeout(() => {
+      bar.fill.style.width = bar.t + '%';
+      countUp(bar.pct, bar.t, 1400);
+    }, 600 + i * 200);
+  });
+}
+// Fire on load (hero is visible)
+window.addEventListener('DOMContentLoaded', () => setTimeout(animateBars, 300));
+</script>
+</body>
+</html>
