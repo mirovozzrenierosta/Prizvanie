@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -58,10 +57,10 @@ body{font-family:var(--font-body);color:var(--gray-700);background:var(--navy);l
 .progress-fill{height:100%;background:var(--gold);border-radius:2px;transition:width .35s ease}
 .q-num{font-family:var(--font-display);font-size:13px;color:var(--gold);font-weight:700;margin-bottom:14px}
 .q-text{font-family:var(--font-display);font-size:23px;color:var(--navy);font-weight:600;line-height:1.35;margin-bottom:auto;min-height:120px}
-.q-actions{display:flex;gap:14px;margin-top:24px}
+.q-actions{display:flex;flex-direction:column;gap:12px;margin-top:24px}
 .q-actions .btn{flex:1;padding:18px}
-.btn--no{background:var(--off-white);color:var(--navy);border:1px solid var(--gray-100)}
-.btn--no:hover{background:var(--gray-100)}
+.btn--ans{flex:1;padding:18px;background:var(--off-white);color:var(--navy);border:2px solid var(--gray-100);font-weight:700}
+.btn--ans:hover{border-color:var(--gold);background:var(--white);transform:translateY(-1px)}
 .q-back{margin-top:18px;text-align:center}
 .q-back button{background:none;border:none;color:var(--gray-400);font-size:11px;text-transform:uppercase;letter-spacing:.06em;cursor:pointer;font-family:var(--font-body)}
 .q-back button:hover{color:var(--navy)}
@@ -134,8 +133,8 @@ body{font-family:var(--font-body);color:var(--gray-700);background:var(--navy);l
       <div class="q-text" id="q-text">—</div>
     </div>
     <div class="q-actions">
-      <button class="btn btn--no" id="btn-yes">Да</button>
-      <button class="btn" id="btn-no">Нет</button>
+      <button class="btn btn--ans" id="btn-yes">Да</button>
+      <button class="btn btn--ans" id="btn-no">Нет</button>
     </div>
     <div class="q-back"><button id="btn-back" disabled>← Назад</button></div>
   </div>
