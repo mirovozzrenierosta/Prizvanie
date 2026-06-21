@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -133,8 +134,8 @@ body{font-family:var(--font-body);color:var(--gray-700);background:var(--navy);l
       <div class="q-text" id="q-text">—</div>
     </div>
     <div class="q-actions">
-      <button class="btn btn--no" id="btn-no">Нет</button>
-      <button class="btn" id="btn-yes">Да</button>
+      <button class="btn btn--no" id="btn-yes">Да</button>
+      <button class="btn" id="btn-no">Нет</button>
     </div>
     <div class="q-back"><button id="btn-back" disabled>← Назад</button></div>
   </div>
@@ -363,8 +364,8 @@ $("btn-restart").addEventListener("click", restart);
 
 document.addEventListener("keydown", (e)=>{
   if($("screen-quiz").classList.contains("hidden")) return;
-  if(e.key === "ArrowRight" || e.key === "1") answer(true);
-  if(e.key === "ArrowLeft" || e.key === "0") answer(false);
+  if(e.key === "ArrowLeft" || e.key === "1") answer(true);
+  if(e.key === "ArrowRight" || e.key === "0") answer(false);
 });
 </script>
 </body>
