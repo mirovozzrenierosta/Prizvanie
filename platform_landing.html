@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<script>document.documentElement.classList.add('js-on')</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Платформа «Мировоззрение Роста» — личный кабинет с 7 модулями</title>
+<style>
+:root{
+  --navy:#1C2B5E;--navy-dk:#131f48;--gold:#C9A227;--gold-lt:#e8c96e;
+  --graph:#2B2B2B;--fog:#7A8599;--beige:#F5F3EE;--cream:#FDFCF9;
+  --border:#E8E4DC;--teal:#0F766E;--purple:#6D28D9;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,'Segoe UI','Helvetica Neue',Arial,sans-serif;
+  color:var(--graph);background:var(--cream);line-height:1.7;
+  -webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:Georgia,'Times New Roman',serif;font-weight:400;line-height:1.2}
+img{max-width:100%}
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+.s{padding:96px 0}
+.s-sm{padding:56px 0}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:200;background:var(--navy);
+  border-bottom:1px solid rgba(255,255,255,.08)}
+.nav-in{max-width:1120px;margin:0 auto;padding:0 28px;height:62px;
+  display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:Georgia,serif;font-size:17px;color:white;text-decoration:none}
+.nav-logo em{color:var(--gold);font-style:normal}
+.nav-ul{display:flex;gap:28px;list-style:none}
+.nav-ul a{font-size:13.5px;color:rgba(255,255,255,.6);text-decoration:none;
+  transition:color .15s}.nav-ul a:hover{color:white}
+.nav-cta{background:var(--gold);color:var(--navy);padding:9px 22px;
+  border-radius:4px;font-size:13.5px;font-weight:700;text-decoration:none;
+  transition:background .15s}.nav-cta:hover{background:var(--gold-lt)}
+@media(max-width:700px){.nav-ul{display:none}}
+
+/* HERO */
+.hero{background:var(--navy);padding:100px 0 80px;overflow:hidden;position:relative}
+.hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 70% at 70% 50%, rgba(201,162,39,.08) 0%, transparent 70%);
+  pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:1fr 480px;gap:64px;align-items:center}
+.hero-ey{font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:22px;font-weight:700}
+.hero h1{font-size:clamp(36px,5vw,62px);color:white;margin-bottom:22px;line-height:1.08}
+.hero h1 em{color:var(--gold);font-style:normal}
+.hero-rule{width:44px;height:2px;background:var(--gold);margin:0 0 22px}
+.hero-sub{font-size:17px;color:rgba(255,255,255,.65);line-height:1.75;
+  margin-bottom:36px;max-width:480px}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:15px 30px;
+  border-radius:4px;font-size:15px;font-weight:700;text-decoration:none;
+  transition:all .18s;cursor:pointer;border:none}
+.btn-gold{background:var(--gold);color:var(--navy)}.btn-gold:hover{background:var(--gold-lt)}
+.btn-ol{border:1.5px solid rgba(255,255,255,.35);color:rgba(255,255,255,.85);
+  background:transparent}.btn-ol:hover{border-color:white;color:white}
+.hero-ft{margin-top:22px;font-size:13px;color:rgba(255,255,255,.28)}
+
+/* PLATFORM MOCKUP */
+.mockup{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);
+  border-radius:16px;padding:20px;backdrop-filter:blur(4px)}
+.mock-bar{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.mock-dot{width:10px;height:10px;border-radius:50%}
+.mock-header{background:rgba(201,162,39,.15);border:1px solid rgba(201,162,39,.2);
+  border-radius:10px;padding:16px 18px;margin-bottom:12px}
+.mock-h-label{font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(201,162,39,.8);margin-bottom:4px}
+.mock-h-title{font-family:Georgia,serif;font-size:16px;color:white;margin-bottom:2px}
+.mock-h-sub{font-size:11px;color:rgba(255,255,255,.45)}
+.mock-modules{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mock-mod{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
+  border-radius:8px;padding:12px;display:flex;align-items:center;gap:10px}
+.mock-mod.done{border-color:rgba(201,162,39,.4)}
+.mock-num{width:22px;height:22px;border-radius:6px;font-size:10px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  background:rgba(28,43,94,.8);color:rgba(201,162,39,.9)}
+.mock-mod.done .mock-num{background:rgba(201,162,39,.2);color:var(--gold-lt)}
+.mock-mod-name{font-size:10.5px;color:rgba(255,255,255,.7);line-height:1.3}
+.mock-mod.done .mock-mod-name{color:rgba(255,255,255,.9)}
+.mock-check{width:14px;height:14px;border-radius:3px;margin-left:auto;flex-shrink:0;
+  border:1.5px solid rgba(255,255,255,.25)}
+.mock-mod.done .mock-check{background:var(--gold);border-color:var(--gold);
+  position:relative}
+.mock-mod.done .mock-check::after{content:'✓';position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:8px;color:var(--navy);font-weight:900}
+.mock-prog{margin-top:12px;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:12px 14px;
+  display:flex;align-items:center;gap:10px}
+.mock-prog-bar{flex:1;height:4px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+.mock-prog-fill{height:100%;background:var(--gold);border-radius:2px;width:43%}
+.mock-prog-txt{font-size:10px;color:rgba(255,255,255,.5);white-space:nowrap}
+@media(max-width:860px){
+  .hero-grid{grid-template-columns:1fr}.mockup{display:none}
+}
+
+/* PROOF BAR */
+.proof{background:var(--beige);border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);padding:26px 0}
+.proof-row{display:flex;justify-content:center;gap:60px;flex-wrap:wrap}
+.proof-n{font-family:Georgia,serif;font-size:32px;color:var(--navy);line-height:1}
+.proof-l{font-size:12px;color:var(--fog);margin-top:3px}
+
+/* SECTION CHROME */
+.badge{display:inline-flex;align-items:center;border:1px solid var(--gold);
+  color:var(--gold);font-size:11px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:18px}
+.stitle{font-size:clamp(26px,4vw,42px);color:var(--navy);margin-bottom:12px}
+.stitle-wh{color:white}
+.ssub{font-size:17px;color:var(--fog);max-width:560px;line-height:1.7}
+.ssub-wh{color:rgba(255,255,255,.6)}
+.divider{width:40px;height:2px;background:var(--gold);margin:0 0 14px}
+
+/* HOW IT WORKS */
+.how{background:var(--cream)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:60px;
+  position:relative}
+.steps::before{content:'';position:absolute;top:28px;left:calc(16.6% + 28px);
+  right:calc(16.6% + 28px);height:1px;background:var(--gold);opacity:.4}
+.step{padding:0 32px;text-align:center;position:relative}
+.step-num{width:56px;height:56px;border-radius:50%;border:2px solid var(--gold);
+  color:var(--navy);font-family:Georgia,serif;font-size:20px;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 22px;background:var(--cream);position:relative;z-index:1}
+.step-name{font-family:Georgia,serif;font-size:18px;color:var(--navy);margin-bottom:8px}
+.step-desc{font-size:14px;color:var(--fog);line-height:1.65}
+@media(max-width:640px){
+  .steps{grid-template-columns:1fr;gap:36px}
+  .steps::before{display:none}
+  .step{padding:0}
+}
+
+/* MODULES */
+.modules-s{background:var(--beige)}
+.mod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:52px}
+.mod-card{background:white;border:1px solid var(--border);border-radius:10px;
+  padding:22px 22px 22px 20px;display:flex;gap:16px;align-items:flex-start;
+  transition:box-shadow .18s,border-color .18s}
+.mod-card:hover{border-color:var(--gold);
+  box-shadow:0 4px 20px rgba(28,43,94,.08)}
+.mod-card.fin{grid-column:1/-1;border-color:rgba(201,162,39,.4);
+  background:linear-gradient(to right,#fffae6,white)}
+.mod-num{width:36px;height:36px;border-radius:50%;background:var(--navy);
+  color:var(--gold);font-family:Georgia,serif;font-size:14px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mod-card.fin .mod-num{background:var(--gold);color:var(--navy)}
+.mod-body{flex:1}
+.mod-name{font-weight:700;font-size:15px;color:var(--navy);margin-bottom:5px}
+.mod-desc{font-size:13.5px;color:var(--fog);line-height:1.6}
+.mod-tag{margin-top:8px;display:inline-block;font-size:11px;
+  color:var(--gold);border:1px solid rgba(201,162,39,.3);
+  padding:2px 10px;border-radius:20px}
+@media(max-width:640px){.mod-grid{grid-template-columns:1fr}}
+
+/* PRIVATE vs CORPORATE */
+.split-s{background:var(--navy-dk)}
+.split-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:52px}
+.split-card{border-radius:14px;padding:32px 28px;border:1.5px solid}
+.split-card.priv{background:rgba(15,118,110,.12);border-color:rgba(15,118,110,.35)}
+.split-card.corp{background:rgba(109,40,217,.1);border-color:rgba(109,40,217,.3)}
+.split-eyebrow{font-size:10px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;margin-bottom:10px}
+.priv .split-eyebrow{color:#4ADECC}
+.corp .split-eyebrow{color:#C4B5FD}
+.split-title{font-family:Georgia,serif;font-size:22px;color:white;margin-bottom:18px}
+.split-ul{list-style:none}
+.split-ul li{font-size:14px;color:rgba(255,255,255,.65);
+  padding:7px 0;border-bottom:1px solid rgba(255,255,255,.07);
+  display:flex;gap:10px;align-items:flex-start}
+.split-ul li:last-child{border-bottom:none}
+.split-ul li::before{content:'→';flex-shrink:0;
+  margin-top:1px}
+.priv .split-ul li::before{color:#4ADECC}
+.corp .split-ul li::before{color:#C4B5FD}
+@media(max-width:640px){.split-grid{grid-template-columns:1fr}}
+
+/* NEXT LEVEL */
+.next-s{background:var(--cream)}
+.next-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:52px}
+.next-card{background:white;border:1px solid var(--border);border-radius:12px;
+  padding:28px;transition:box-shadow .18s}
+.next-card:hover{box-shadow:0 4px 24px rgba(28,43,94,.09)}
+.next-badge{display:inline-block;font-size:9px;font-weight:700;
+  padding:3px 8px;border-radius:4px;letter-spacing:.06em;margin-bottom:12px}
+.nb-ai{background:var(--navy);color:var(--gold)}
+.nb-new{background:#15803D;color:white}
+.nb-corp{background:var(--purple);color:white}
+.nb-session{background:var(--gold);color:var(--navy)}
+.next-icon{font-size:28px;margin-bottom:10px;display:block}
+.next-name{font-family:Georgia,serif;font-size:18px;color:var(--navy);margin-bottom:6px}
+.next-desc{font-size:13.5px;color:var(--fog);line-height:1.6}
+@media(max-width:600px){.next-grid{grid-template-columns:1fr}}
+
+/* CTA FINAL */
+.cta-s{background:var(--navy);text-align:center;padding:100px 0}
+.cta-s h2{font-size:clamp(30px,4.5vw,52px);color:white;margin-bottom:14px}
+.cta-s h2 em{color:var(--gold);font-style:normal}
+.cta-s p{font-size:17px;color:rgba(255,255,255,.6);
+  max-width:500px;margin:0 auto 44px;line-height:1.7}
+.cta-note{margin-top:20px;font-size:13px;color:rgba(255,255,255,.25)}
+
+/* FOOTER */
+.footer{background:var(--navy-dk);border-top:1px solid rgba(255,255,255,.07);padding:28px 0}
+.foot-in{display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:14px}
+.foot-logo{font-family:Georgia,serif;font-size:16px;
+  color:rgba(255,255,255,.6);text-decoration:none}
+.foot-logo em{color:var(--gold);font-style:normal}
+.foot-copy{font-size:12px;color:rgba(255,255,255,.22)}
+
+/* SCROLL ANIM */
+.js-on [data-anim]{
+  opacity:0;transform:translateY(20px);
+  transition:opacity 600ms cubic-bezier(.22,.61,.36,1),
+             transform 600ms cubic-bezier(.22,.61,.36,1)}
+.js-on [data-anim][data-anim-done]{opacity:1;transform:translateY(0)}
+.js-on [data-anim][data-delay="1"]{transition-delay:80ms}
+.js-on [data-anim][data-delay="2"]{transition-delay:160ms}
+.js-on [data-anim][data-delay="3"]{transition-delay:240ms}
+@media(prefers-reduced-motion:reduce){
+  .js-on [data-anim]{opacity:1!important;transform:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-in">
+    <a class="nav-logo" href="#">Александр <em>Иванищев</em></a>
+    <ul class="nav-ul">
+      <li><a href="#how">Как работает</a></li>
+      <li><a href="#modules">Модули</a></li>
+      <li><a href="#access">Доступ</a></li>
+    </ul>
+    <a class="nav-cta" href="#access">Получить доступ →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <p class="hero-ey">Платформа персональных консультаций</p>
+        <h1>Ваш личный<br>кабинет —<br><em>ваша карта</em><br>роста</h1>
+        <div class="hero-rule"></div>
+        <p class="hero-sub">7 модулей глубинной диагностики. Портрет личности, совместимость, эмоциональный профиль — всё в одном месте. Александр работает с вами лично.</p>
+        <div class="btn-row">
+          <a class="btn btn-gold" href="#access">Получить доступ к платформе →</a>
+          <a class="btn btn-ol" href="#modules">Посмотреть модули</a>
+        </div>
+        <p class="hero-ft">Доступ только по личному приглашению Александра</p>
+      </div>
+
+      <!-- MOCKUP -->
+      <div class="mockup" aria-hidden="true">
+        <div class="mock-bar">
+          <div class="mock-dot" style="background:#ff5f57"></div>
+          <div class="mock-dot" style="background:#ffbd2e"></div>
+          <div class="mock-dot" style="background:#28c840"></div>
+        </div>
+        <div class="mock-header">
+          <div class="mock-h-label">Личный кабинет</div>
+          <div class="mock-h-title">Добро пожаловать</div>
+          <div class="mock-h-sub">Ваш прогресс: 3 из 7 модулей пройдено</div>
+        </div>
+        <div class="mock-modules">
+          <div class="mock-mod done">
+            <div class="mock-num">1</div>
+            <div class="mock-mod-name">Портрет личности</div>
+            <div class="mock-check"></div>
+          </div>
+          <div class="mock-mod done">
+            <div class="mock-num">2</div>
+            <div class="mock-mod-name">Идеальный партнёр</div>
+            <div class="mock-check"></div>
+          </div>
+          <div class="mock-mod done">
+            <div class="mock-num">3</div>
+            <div class="mock-mod-name">Совместимость</div>
+            <div class="mock-check"></div>
+          </div>
+          <div class="mock-mod">
+            <div class="mock-num">4</div>
+            <div class="mock-mod-name">Портрет / жизнь</div>
+            <div class="mock-check"></div>
+          </div>
+          <div class="mock-mod">
+            <div class="mock-num">5</div>
+            <div class="mock-mod-name">Эмоц. автопилот</div>
+            <div class="mock-check"></div>
+          </div>
+          <div class="mock-mod">
+            <div class="mock-num">6</div>
+            <div class="mock-mod-name">Скрытый мотив</div>
+            <div class="mock-check"></div>
+          </div>
+        </div>
+        <div class="mock-prog">
+          <div class="mock-prog-bar"><div class="mock-prog-fill"></div></div>
+          <div class="mock-prog-txt">43% завершено</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- PROOF -->
+<div class="proof">
+  <div class="wrap">
+    <div class="proof-row">
+      <div><div class="proof-n">7</div><div class="proof-l">модулей диагностики</div></div>
+      <div><div class="proof-n">5</div><div class="proof-l">психологических матриц</div></div>
+      <div><div class="proof-n">7+</div><div class="proof-l">лет практики</div></div>
+      <div><div class="proof-n">19</div><div class="proof-l">рабочих документов</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="s how" id="how">
+  <div class="wrap">
+    <div data-anim>
+      <span class="badge">Как это работает</span>
+      <h2 class="stitle">Три шага до вашего портрета</h2>
+      <p class="ssub">Вход в платформу — только через личное приглашение. Это не курс. Это индивидуальная работа.</p>
+    </div>
+    <div class="steps">
+      <div class="step" data-anim data-delay="1">
+        <div class="step-num">1</div>
+        <div class="step-name">Получаете ссылку</div>
+        <div class="step-desc">Александр присылает персональную ссылку — вы вводите email и сразу попадаете в кабинет без лишних шагов</div>
+      </div>
+      <div class="step" data-anim data-delay="2">
+        <div class="step-num">2</div>
+        <div class="step-name">Работаете с модулями</div>
+        <div class="step-desc">Проходите модули в своём темпе. Каждый — это глубинная диагностика с личным разбором от Александра</div>
+      </div>
+      <div class="step" data-anim data-delay="3">
+        <div class="step-num">3</div>
+        <div class="step-name">Получаете карту себя</div>
+        <div class="step-desc">Ваш полный психологический портрет, стратегия развития и ответы на вопросы, которые вы носили в себе годами</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section class="s modules-s" id="modules">
+  <div class="wrap">
+    <div data-anim>
+      <span class="badge">7 модулей</span>
+      <h2 class="stitle">Чеклист вашего кабинета</h2>
+      <p class="ssub">Каждый модуль открывает новый слой. Они выстроены так, чтобы каждый следующий опирался на предыдущий.</p>
+    </div>
+    <div class="mod-grid">
+      <div class="mod-card" data-anim data-delay="1">
+        <div class="mod-num">1</div>
+        <div class="mod-body">
+          <div class="mod-name">Портрет личности</div>
+          <div class="mod-desc">Базовая диагностика по 5 матрицам — ядро всей платформы. Понимаете, как вы устроены на самом деле.</div>
+          <span class="mod-tag">Ядро системы</span>
+        </div>
+      </div>
+      <div class="mod-card" data-anim data-delay="2">
+        <div class="mod-num">2</div>
+        <div class="mod-body">
+          <div class="mod-name">Идеальный партнёр</div>
+          <div class="mod-desc">Профиль совместимости в романтических, деловых и командных отношениях. Кто вас дополняет — и почему.</div>
+        </div>
+      </div>
+      <div class="mod-card" data-anim data-delay="1">
+        <div class="mod-num">3</div>
+        <div class="mod-body">
+          <div class="mod-name">Совместимость</div>
+          <div class="mod-desc">Анализ конкретной пары или участников команды. Кто дополняет, где возникают конфликты и почему.</div>
+        </div>
+      </div>
+      <div class="mod-card" data-anim data-delay="2">
+        <div class="mod-num">4</div>
+        <div class="mod-body">
+          <div class="mod-name">Портрет и жизнь</div>
+          <div class="mod-desc">Где ваш психотип конфликтует с реальными условиями жизни — работой, бытом, окружением.</div>
+        </div>
+      </div>
+      <div class="mod-card" data-anim data-delay="1">
+        <div class="mod-num">5</div>
+        <div class="mod-body">
+          <div class="mod-name">Эмоциональный автопилот</div>
+          <div class="mod-desc">Из какого состояния вы действуете — осознанности или реактивности. Как выйти из автопилота.</div>
+        </div>
+      </div>
+      <div class="mod-card" data-anim data-delay="2">
+        <div class="mod-num">6</div>
+        <div class="mod-body">
+          <div class="mod-name">Эмоции — скрытый мотив</div>
+          <div class="mod-desc">Что стоит за вашими эмоциональными реакциями и какая потребность за ними скрыта.</div>
+        </div>
+      </div>
+      <div class="mod-card fin" data-anim>
+        <div class="mod-num">7</div>
+        <div class="mod-body">
+          <div class="mod-name">Архитектор выгодных позиций</div>
+          <div class="mod-desc">Стратегический разбор любой жизненной или бизнес-ситуации по 5 слоям. Принимаете решения с новой ясностью.</div>
+          <span class="mod-tag">Финальный модуль</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVATE vs CORPORATE -->
+<section class="s split-s" id="access">
+  <div class="wrap">
+    <div data-anim>
+      <span class="badge">Форматы работы</span>
+      <h2 class="stitle stitle-wh">Для кого подходит платформа</h2>
+      <p class="ssub ssub-wh">Один инструмент — два формата использования.</p>
+    </div>
+    <div class="split-grid">
+      <div class="split-card priv" data-anim data-delay="1">
+        <div class="split-eyebrow">Частный клиент</div>
+        <div class="split-title">Личная работа</div>
+        <ul class="split-ul">
+          <li>Результаты видите только вы — полная конфиденциальность</li>
+          <li>Индивидуальный темп прохождения модулей</li>
+          <li>Личная сессия с Александром по каждому модулю</li>
+          <li>Ваш психологический портрет на всю жизнь</li>
+        </ul>
+      </div>
+      <div class="split-card corp" data-anim data-delay="2">
+        <div class="split-eyebrow">Корпоративный клиент</div>
+        <div class="split-title">Работа с командой</div>
+        <ul class="split-ul">
+          <li>Результаты участников видят руководители</li>
+          <li>Сводный отчёт по психотипам всей команды</li>
+          <li>Матрица совместимости отдела</li>
+          <li>Рекомендации по распределению ролей и задач</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEXT LEVEL -->
+<section class="s next-s">
+  <div class="wrap">
+    <div data-anim>
+      <span class="badge">На подходе</span>
+      <h2 class="stitle">Платформа расширяется</h2>
+      <p class="ssub">Инструменты следующего уровня — для тех, кто уже прошёл базовые модули.</p>
+    </div>
+    <div class="next-grid">
+      <div class="next-card" data-anim data-delay="1">
+        <span class="next-badge nb-ai">AI</span>
+        <span class="next-icon">🤖</span>
+        <div class="next-name">AI-консультант</div>
+        <div class="next-desc">Персональный чат на основе всех пройденных модулей. Знает ваш портрет, историю и контекст — отвечает с учётом вашей структуры личности.</div>
+      </div>
+      <div class="next-card" data-anim data-delay="2">
+        <span class="next-badge nb-new">ПРОГРЕСС</span>
+        <span class="next-icon">📊</span>
+        <div class="next-name">Дашборд прогресса</div>
+        <div class="next-desc">Визуализация пройденных модулей, динамика состояния, ключевые инсайты за период — в одном экране.</div>
+      </div>
+      <div class="next-card" data-anim data-delay="1">
+        <span class="next-badge nb-corp">КОРП</span>
+        <span class="next-icon">👥</span>
+        <div class="next-name">Командный анализ</div>
+        <div class="next-desc">Матрица совместимости всей команды. Полный отчёт для руководителя по психотипам, ролям и зонам напряжения в отделе.</div>
+      </div>
+      <div class="next-card" data-anim data-delay="2">
+        <span class="next-badge nb-session">СЕССИЯ</span>
+        <span class="next-icon">📅</span>
+        <div class="next-name">Запись к Александру</div>
+        <div class="next-desc">Кнопка живой сессии прямо из кабинета — с автоматической передачей контекста всех пройденных модулей.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-s">
+  <div class="wrap">
+    <div data-anim>
+      <h2>Готовы понять<br>себя — <em>по-настоящему?</em></h2>
+      <p>Напишите Александру напрямую. Он пришлёт персональную ссылку и расскажет, с какого модуля начать именно вам.</p>
+      <div class="btn-row" style="justify-content:center">
+        <a class="btn btn-gold" href="https://t.me/mirovozzrenierosta" target="_blank" rel="noopener">Написать в Telegram →</a>
+      </div>
+      <p class="cta-note">Доступ — только по приглашению · Количество мест ограничено</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-in">
+      <a class="foot-logo" href="#">Александр <em>Иванищев</em></a>
+      <div class="foot-copy">Мировоззрение Роста · Понять себя — изменить всё</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Scroll animations
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.setAttribute('data-anim-done', '');
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('[data-anim]').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
