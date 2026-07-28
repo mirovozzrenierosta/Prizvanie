@@ -30,6 +30,8 @@ img{max-width:100%}
   display:flex;align-items:center;justify-content:space-between}
 .nav-logo{font-family:Georgia,serif;font-size:17px;color:white;text-decoration:none}
 .nav-logo em{color:var(--gold);font-style:normal}
+.nav-brand-tag{font-family:-apple-system,'Segoe UI',Arial,sans-serif;font-size:12px;color:rgba(255,255,255,.4);margin-left:6px}
+@media(max-width:860px){.nav-brand-tag{display:none}}
 .nav-ul{display:flex;gap:28px;list-style:none}
 .nav-ul a{font-size:13.5px;color:rgba(255,255,255,.6);text-decoration:none;
   transition:color .15s}.nav-ul a:hover{color:white}
@@ -299,7 +301,7 @@ img{max-width:100%}
 <!-- NAV -->
 <nav class="nav">
   <div class="nav-in">
-    <a class="nav-logo" href="#">Александр <em>Иванищев</em></a>
+    <a class="nav-logo" href="#">Александр <em>Иванищев</em><span class="nav-brand-tag">· Мировоззрение Роста</span></a>
     <ul class="nav-ul">
       <li><a href="#how">Как работает</a></li>
       <li><a href="#modules">Модули</a></li>
