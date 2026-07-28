@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Карта платформы — Мировоззрение Роста</title>
+<style>
+  :root {
+    --blue: #2B5D8F;
+    --blue-mid: #3B74AD;
+    --blue-light: #EFF6FF;
+    --teal: #0F766E;
+    --teal-light: #F0FDFA;
+    --purple: #6D28D9;
+    --purple-light: #F5F3FF;
+    --amber: #92400E;
+    --amber-bg: #FFFBEB;
+    --amber-border: #FCD34D;
+    --green: #15803D;
+    --green-bg: #F0FDF4;
+    --slate: #1E293B;
+    --muted: #64748B;
+    --border: #E2E8F0;
+    --bg: #F8FAFC;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--slate);
+    padding: 40px 20px 60px;
+  }
+  .map { max-width: 800px; margin: 0 auto; }
+
+  /* Header */
+  .header { text-align: center; margin-bottom: 36px; }
+  .brand-label {
+    font-size: 11px; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
+  }
+  .header h1 { font-size: 21px; font-weight: 800; color: var(--blue); }
+
+  /* Arrow connector */
+  .down { display: flex; justify-content: center; padding: 10px 0; color: #CBD5E1; font-size: 20px; }
+
+  /* ── ENTRY ── */
+  .entry {
+    background: var(--blue); color: white;
+    border-radius: 14px; padding: 22px 28px; text-align: center;
+  }
+  .entry-label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; opacity: .65; margin-bottom: 4px; }
+  .entry-title { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+  .entry-sub { font-size: 13px; opacity: .8; }
+  .entry-tags { display: flex; gap: 8px; justify-content: center; margin-top: 12px; }
+  .tag {
+    background: rgba(255,255,255,.18); border-radius: 20px;
+    padding: 4px 12px; font-size: 12px; font-weight: 600;
+  }
+
+  /* ── SPLIT ── */
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 4px 0; }
+  .split-block {
+    border-radius: 12px; padding: 20px; border: 2px solid;
+  }
+  .personal { background: var(--teal-light); border-color: var(--teal); }
+  .corporate { background: var(--purple-light); border-color: var(--purple); }
+  .split-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .personal .split-label { color: var(--teal); }
+  .corporate .split-label { color: var(--purple); }
+  .split-title { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+  .personal .split-title { color: var(--teal); }
+  .corporate .split-title { color: var(--purple); }
+  .split-point { font-size: 12.5px; color: var(--slate); padding: 3px 0; display: flex; gap: 7px; }
+  .split-point span { opacity: .5; }
+
+  /* merge arrows */
+  .merge { display: flex; justify-content: center; margin: 2px 0 4px; }
+
+  /* ── CABINET ── */
+  .cabinet {
+    background: white; border: 2.5px solid var(--blue);
+    border-radius: 14px; padding: 22px 28px; text-align: center;
+  }
+  .cabinet-label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); opacity: .65; margin-bottom: 4px; }
+  .cabinet-title { font-size: 20px; font-weight: 800; color: var(--blue); margin-bottom: 4px; }
+  .cabinet-sub { font-size: 13px; color: var(--muted); }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-size: 10px; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; padding: 20px 0 10px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::before, .section-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  /* ── MODULES ── */
+  .modules { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .module {
+    background: white; border: 1.5px solid var(--border);
+    border-radius: 10px; padding: 14px 16px;
+    display: flex; align-items: flex-start; gap: 12px;
+    transition: border-color .15s, box-shadow .15s;
+    cursor: default;
+  }
+  .module:hover { border-color: var(--blue); box-shadow: 0 2px 8px rgba(43,93,143,.1); }
+  .mod-num {
+    width: 26px; height: 26px; border-radius: 7px;
+    font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    background: var(--blue-light); color: var(--blue);
+  }
+  .mod-body { flex: 1; min-width: 0; }
+  .mod-name { font-size: 13px; font-weight: 700; color: var(--slate); line-height: 1.3; }
+  .mod-desc { font-size: 11.5px; color: var(--muted); margin-top: 3px; line-height: 1.4; }
+  .mod-check {
+    width: 18px; height: 18px; border: 2px solid var(--border);
+    border-radius: 4px; flex-shrink: 0; margin-top: 2px;
+  }
+  .module.future { border-style: dashed; opacity: .55; }
+
+  /* ── PROPOSED ── */
+  .proposed-label { color: var(--amber); }
+  .proposed { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .prop-card {
+    background: var(--amber-bg); border: 1.5px solid var(--amber-border);
+    border-radius: 10px; padding: 16px;
+  }
+  .prop-card.corp { background: var(--purple-light); border-color: #C4B5FD; }
+  .prop-card.green { background: var(--green-bg); border-color: #86EFAC; }
+  .prop-icon { font-size: 20px; margin-bottom: 6px; }
+  .prop-name { font-size: 13px; font-weight: 700; color: var(--amber); line-height: 1.3; }
+  .prop-card.corp .prop-name { color: var(--purple); }
+  .prop-card.green .prop-name { color: var(--green); }
+  .prop-desc { font-size: 11.5px; color: var(--muted); margin-top: 4px; line-height: 1.45; }
+  .badge {
+    display: inline-block; font-size: 9px; font-weight: 700;
+    padding: 2px 6px; border-radius: 4px; letter-spacing: .06em;
+    margin-bottom: 6px;
+  }
+  .badge.corp { background: var(--purple); color: white; }
+  .badge.ai { background: var(--amber); color: white; }
+  .badge.new { background: var(--green); color: white; }
+
+  /* footer */
+  .footer { text-align: center; margin-top: 44px; font-size: 11px; color: #94A3B8; }
+</style>
+</head>
+<body>
+<div class="map">
+
+  <div class="header">
+    <div class="brand-label">Мировоззрение Роста</div>
+    <h1>Карта платформы персональных консультаций</h1>
+  </div>
+
+  <!-- ВХОД -->
+  <div class="entry">
+    <div class="entry-label">Точка входа</div>
+    <div class="entry-title">Регистрация</div>
+    <div class="entry-sub">Клиент получает уникальную ссылку от Александра — переходит, вводит email, попадает в кабинет</div>
+    <div class="entry-tags">
+      <div class="tag">✉ По email + magic link</div>
+      <div class="tag">🔗 Уникальная ссылка</div>
+    </div>
+  </div>
+
+  <div class="down">↓</div>
+
+  <!-- ВЕТВЛЕНИЕ -->
+  <div class="split">
+    <div class="split-block personal">
+      <div class="split-label">Личное использование</div>
+      <div class="split-title">Частный клиент</div>
+      <div class="split-point"><span>→</span> Результаты видит только клиент</div>
+      <div class="split-point"><span>→</span> Полный контроль над данными</div>
+      <div class="split-point"><span>→</span> Индивидуальный прогресс</div>
+    </div>
+    <div class="split-block corporate">
+      <div class="split-label">Корпоративное использование</div>
+      <div class="split-title">Корпоративный клиент</div>
+      <div class="split-point"><span>→</span> Результаты → клиенту и руководству</div>
+      <div class="split-point"><span>→</span> Сводный отчёт по команде</div>
+      <div class="split-point"><span>→</span> Матрица совместимости отдела</div>
+    </div>
+  </div>
+
+  <!-- Merge -->
+  <div class="merge">
+    <svg width="320" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M80 0 L80 22 L160 22" stroke="#CBD5E1" stroke-width="1.5"/>
+      <path d="M240 0 L240 22 L160 22" stroke="#CBD5E1" stroke-width="1.5"/>
+      <path d="M160 22 L160 38" stroke="#CBD5E1" stroke-width="1.5"/>
+      <polygon points="155,37 165,37 160,44" fill="#CBD5E1"/>
+    </svg>
+  </div>
+
+  <!-- КАБИНЕТ -->
+  <div class="cabinet">
+    <div class="cabinet-label">Главный экран</div>
+    <div class="cabinet-title">Личный кабинет</div>
+    <div class="cabinet-sub">Приветственное сообщение · Чеклист модулей · Статус прогресса</div>
+  </div>
+
+  <!-- МОДУЛИ -->
+  <div class="section-label" style="color:var(--blue)">Модули — чеклист в кабинете</div>
+  <div class="modules">
+
+    <div class="module">
+      <div class="mod-num">1</div>
+      <div class="mod-body">
+        <div class="mod-name">Портрет личности</div>
+        <div class="mod-desc">Базовая диагностика по 5 матрицам — ядро всей платформы</div>
+      </div>
+      <div class="mod-check"></div>
+    </div>
+
+    <div class="module">
+      <div class="mod-num">2</div>
+      <div class="mod-body">
+        <div class="mod-name">Идеальный партнёр</div>
+        <div class="mod-desc">Профиль совместимости в романтических, деловых и командных отношениях</div>
+      </div>
+      <div class="mod-check"></div>
+    </div>
+
+    <div class="module">
+      <div class="mod-num">3</div>
+      <div class="mod-body">
+        <div class="mod-name">Совместимость</div>
+        <div class="mod-desc">Анализ пары или участников команды — кто дополняет, кто конфликтует</div>
+      </div>
+      <div class="mod-check"></div>
+    </div>
+
+    <div class="module">
+      <div class="mod-num">4</div>
+      <div class="mod-body">
+        <div class="mod-name">Портрет / жизнь</div>
+        <div class="mod-desc">Где психотип конфликтует с реальными условиями жизни клиента</div>
+      </div>
+      <div class="mod-check"></div>
+    </div>
+
+    <div class="module">
+      <div class="mod-num">5</div>
+      <div class="mod-body">
+        <div class="mod-name">Эмоциональный автопилот</div>
+        <div class="mod-desc">Из какого состояния действует клиент — осознанность или реактивность</div>
+      </div>
+      <div class="mod-check"></div>
+    </div>
+
+    <div class="module">
+      <div class="mod-num">6</div>
+      <div class="mod-body">
+        <div class="mod-name">Эмоции — скрытый мотив</div>
+        <div class="mod-desc">Что стоит за эмоциональными реакциями и какая потребность за ними</div>
+      </div>
+      <div class="mod-check"></div>
+    </div>
+
+    <div class="module">
+      <div class="mod-num" style="background:#F0FDF4;color:#15803D">7</div>
+      <div class="mod-body">
+        <div class="mod-name">Архитектор выгодных позиций</div>
+        <div class="mod-desc">Стратегический разбор любой жизненной или бизнес-ситуации по 5 слоям</div>
+      </div>
+      <div class="mod-check"></div>
+    </div>
+
+    <div class="module future">
+      <div class="mod-num" style="background:#F1F5F9;color:#94A3B8">+</div>
+      <div class="mod-body">
+        <div class="mod-name">Новые модули</div>
+        <div class="mod-desc">Платформа расширяется по мере роста методологии</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ПРЕДЛОЖЕНИЯ -->
+  <div class="section-label proposed-label">Следующий уровень — предложения</div>
+  <div class="proposed">
+
+    <div class="prop-card">
+      <div class="badge ai">AI</div>
+      <div class="prop-icon">🤖</div>
+      <div class="prop-name">AI-консультант</div>
+      <div class="prop-desc">Персональный чат на основе всех пройденных модулей. Знает портрет, историю и контекст клиента.</div>
+    </div>
+
+    <div class="prop-card green">
+      <div class="badge new">ПРОГРЕСС</div>
+      <div class="prop-icon">📊</div>
+      <div class="prop-name">Дашборд прогресса</div>
+      <div class="prop-desc">Визуализация пройденных модулей, динамика состояния, ключевые инсайты за период.</div>
+    </div>
+
+    <div class="prop-card corp">
+      <div class="badge corp">КОРП</div>
+      <div class="prop-icon">👥</div>
+      <div class="prop-name">Командный анализ</div>
+      <div class="prop-desc">Матрица совместимости команды. Отчёт для руководителя по психотипам и ролям в отделе.</div>
+    </div>
+
+    <div class="prop-card">
+      <div class="badge ai">СЕССИЯ</div>
+      <div class="prop-icon">📅</div>
+      <div class="prop-name">Запись к Александру</div>
+      <div class="prop-desc">Переход от AI к живой сессии. Кнопка прямо из кабинета — с передачей контекста из модулей.</div>
+    </div>
+
+  </div>
+
+  <div class="footer">Мировоззрение Роста &nbsp;·&nbsp; Понять себя — изменить всё</div>
+</div>
+</body>
+</html>
