@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<script>document.documentElement.classList.add('js-on')</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Психологический портрет личности — Александр Иванищев</title>
+<style>
+:root{
+  --navy:#1C2B5E;--navy-dk:#131f48;--gold:#C9A227;--gold-lt:#e8c96e;--gold-bg:#FDF8EC;
+  --graph:#1E1E1E;--fog:#7A8599;--beige:#F5F3EE;--cream:#FDFCF9;
+  --border:#E8E4DC;--white:#ffffff;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,'Segoe UI','Helvetica Neue',Arial,sans-serif;
+  color:var(--graph);background:var(--white);line-height:1.7;
+  -webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:Georgia,'Times New Roman',serif;font-weight:400;line-height:1.2}
+img{max-width:100%}
+.wrap{max-width:1100px;margin:0 auto;padding:0 28px}
+.s{padding:88px 0}
+.s-sm{padding:56px 0}
+.s-label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);
+  font-weight:700;margin-bottom:18px}
+.s-title{font-size:clamp(28px,4vw,46px);color:var(--navy);margin-bottom:16px}
+.s-sub{font-size:17px;color:var(--fog);line-height:1.7;max-width:640px}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:200;background:var(--white);
+  border-bottom:1px solid var(--border)}
+.nav-in{max-width:1100px;margin:0 auto;padding:0 28px;height:60px;
+  display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:Georgia,serif;font-size:16px;color:var(--navy);text-decoration:none}
+.nav-logo em{color:var(--gold);font-style:normal}
+.nav-ul{display:flex;gap:28px;list-style:none}
+.nav-ul a{font-size:13.5px;color:var(--fog);text-decoration:none;
+  transition:color .15s}.nav-ul a:hover{color:var(--navy)}
+.nav-cta{background:var(--gold);color:var(--navy);padding:9px 22px;
+  border-radius:4px;font-size:13.5px;font-weight:700;text-decoration:none;
+  transition:background .15s}.nav-cta:hover{background:var(--gold-lt)}
+@media(max-width:700px){.nav-ul{display:none}}
+
+/* HERO — light cream, dark text (Repyev: 5-10x more readable) */
+.hero{background:var(--cream);padding:100px 0 80px;overflow:hidden;position:relative;
+  border-bottom:1px solid var(--border)}
+.hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 50% 60% at 80% 50%, rgba(201,162,39,.07) 0%, transparent 70%);
+  pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:1fr 460px;gap:72px;align-items:center}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:40px}}
+.hero-ey{font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:18px;font-weight:700}
+.hero h1{font-size:clamp(34px,4.5vw,58px);color:var(--navy);margin-bottom:20px;line-height:1.1}
+.hero h1 em{color:var(--gold);font-style:normal}
+.hero-rule{width:44px;height:2px;background:var(--gold);margin:0 0 20px}
+.hero-sub{font-size:17px;color:#444;line-height:1.7;margin-bottom:14px}
+.hero-list{list-style:none;margin-bottom:34px}
+.hero-list li{font-size:15.5px;color:#333;
+  padding:6px 0;display:flex;gap:12px;align-items:flex-start;
+  border-bottom:1px solid var(--border)}
+.hero-list li:last-child{border-bottom:none}
+.hero-list li::before{content:'→';color:var(--gold);font-weight:700;flex-shrink:0;
+  margin-top:1px;font-size:14px}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:15px 32px;
+  border-radius:4px;font-size:15px;font-weight:700;text-decoration:none;
+  transition:all .18s;cursor:pointer;border:none}
+.btn-gold{background:var(--gold);color:var(--navy)}.btn-gold:hover{background:var(--gold-lt)}
+.btn-ol{border:1.5px solid var(--navy);color:var(--navy);
+  background:transparent}.btn-ol:hover{background:var(--navy);color:white}
+.hero-ft{margin-top:18px;font-size:13px;color:var(--fog)}
+
+/* HERO CARD */
+.hero-card{background:white;border:1px solid var(--border);border-radius:16px;
+  padding:28px;box-shadow:0 4px 28px rgba(28,43,94,.08)}
+.hc-label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--fog);margin-bottom:12px}
+.hc-title{font-family:Georgia,serif;font-size:20px;color:var(--navy);margin-bottom:8px}
+.hc-bars{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.hc-bar-row{display:flex;align-items:center;gap:10px}
+.hc-bar-label{font-size:12px;color:var(--fog);width:36px;flex-shrink:0}
+.hc-bar-track{flex:1;height:7px;background:var(--beige);border-radius:4px;overflow:hidden}
+.hc-bar-fill{height:100%;border-radius:4px;background:var(--gold)}
+.hc-bar-val{font-size:12px;color:var(--navy);font-weight:700;width:30px;text-align:right}
+.hc-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.hc-chip{font-size:11.5px;padding:4px 12px;border-radius:20px;
+  background:var(--beige);color:var(--navy);border:1px solid var(--border)}
+
+/* PROOF BAR — navy stays here, it's a small strip */
+.proof{background:var(--navy);padding:24px 0}
+.proof-in{display:flex;justify-content:center;gap:56px;flex-wrap:wrap}
+.proof-item{text-align:center}
+.proof-num{font-family:Georgia,serif;font-size:32px;color:var(--gold);line-height:1}
+.proof-text{font-size:13px;color:rgba(255,255,255,.55);margin-top:4px}
+@media(max-width:600px){.proof-in{gap:28px}}
+
+/* PAIN POINTS */
+.pain{background:var(--white);padding:88px 0}
+.pain-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:48px}
+.pain-card{background:var(--cream);border:1px solid var(--border);border-radius:12px;
+  padding:28px 24px;position:relative}
+.pain-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;
+  background:var(--gold);border-radius:3px 0 0 3px}
+.pain-icon{font-size:28px;margin-bottom:14px}
+.pain-card h3{font-family:Georgia,serif;font-size:18px;color:var(--navy);margin-bottom:8px}
+.pain-card p{font-size:14.5px;color:var(--fog);line-height:1.6}
+
+/* BENEFITS */
+.benefits{background:var(--cream);padding:88px 0}
+.bene-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;margin-top:48px}
+.bene-card{background:white;border:1px solid var(--border);border-radius:12px;padding:28px 24px}
+.bene-num{font-family:Georgia,serif;font-size:40px;color:var(--gold);opacity:.35;
+  line-height:1;margin-bottom:12px}
+.bene-card h3{font-family:Georgia,serif;font-size:19px;color:var(--navy);margin-bottom:10px}
+.bene-card p{font-size:14.5px;color:var(--fog);line-height:1.65}
+
+/* HOW IT WORKS */
+.how{background:var(--white);padding:88px 0}
+.how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:48px;
+  position:relative}
+.how-steps::before{content:'';position:absolute;top:28px;left:16%;right:16%;
+  height:1px;background:var(--border)}
+@media(max-width:700px){.how-steps{grid-template-columns:1fr;gap:32px}
+  .how-steps::before{display:none}}
+.how-step{text-align:center;position:relative;z-index:1}
+.how-circle{width:56px;height:56px;border-radius:50%;border:2px solid var(--gold);
+  background:white;display:flex;align-items:center;justify-content:center;
+  margin:0 auto 20px;font-family:Georgia,serif;font-size:22px;color:var(--gold)}
+.how-step h3{font-family:Georgia,serif;font-size:18px;color:var(--navy);margin-bottom:8px}
+.how-step p{font-size:14px;color:var(--fog);line-height:1.65}
+
+/* ABOUT ALEKSANDR */
+.about{background:var(--cream);padding:88px 0}
+.about-grid{display:grid;grid-template-columns:300px 1fr;gap:64px;align-items:start;margin-top:48px}
+@media(max-width:800px){.about-grid{grid-template-columns:1fr;gap:32px}}
+.about-avatar{width:240px;height:300px;border-radius:12px;
+  background:linear-gradient(135deg,var(--navy) 0%,#2a3f7e 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-family:Georgia,serif;font-size:72px;color:var(--gold)}
+.about-facts{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+@media(max-width:600px){.about-facts{grid-template-columns:1fr}}
+.about-fact{background:white;border:1px solid var(--border);border-radius:10px;
+  padding:18px 20px}
+.about-fact strong{display:block;font-family:Georgia,serif;font-size:22px;
+  color:var(--navy);margin-bottom:2px}
+.about-fact span{font-size:13px;color:var(--fog)}
+.about-bio{font-size:15.5px;color:#444;line-height:1.75}
+.about-bio p+p{margin-top:14px}
+
+/* SYSTEM — 5 matrices + 7 modules */
+.system{background:var(--white);padding:88px 0}
+.matrices-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:40px}
+.matrix-card{border:1px solid var(--border);border-radius:10px;padding:22px 20px}
+.matrix-card .mc-num{font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gold);font-weight:700;margin-bottom:10px}
+.matrix-card h3{font-family:Georgia,serif;font-size:17px;color:var(--navy);margin-bottom:8px}
+.matrix-card p{font-size:13.5px;color:var(--fog);line-height:1.6}
+.modules-note{background:var(--gold-bg);border:1px solid rgba(201,162,39,.25);
+  border-radius:12px;padding:32px;margin-top:40px}
+.modules-note h3{font-family:Georgia,serif;font-size:22px;color:var(--navy);margin-bottom:16px}
+.modules-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.mod-item{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:#444}
+.mod-item::before{content:'◆';color:var(--gold);font-size:10px;flex-shrink:0;margin-top:3px}
+
+/* CASES */
+.cases{background:var(--cream);padding:88px 0}
+.cases-list{display:flex;flex-direction:column;gap:32px;margin-top:48px}
+.case-card{background:white;border:1px solid var(--border);border-radius:14px;
+  padding:32px 36px;position:relative;overflow:hidden}
+.case-card::after{content:'';position:absolute;top:0;right:0;width:4px;height:100%;
+  background:var(--gold)}
+.case-tag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--fog);font-weight:700;margin-bottom:14px}
+.case-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px}
+@media(max-width:700px){.case-cols{grid-template-columns:1fr}}
+.case-col-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gold);font-weight:700;margin-bottom:8px}
+.case-col h4{font-family:Georgia,serif;font-size:16px;color:var(--navy);margin-bottom:8px}
+.case-col p{font-size:14px;color:var(--fog);line-height:1.65}
+.case-result{margin-top:20px;padding-top:20px;border-top:1px solid var(--border);
+  display:flex;align-items:center;gap:12px}
+.case-result-icon{width:32px;height:32px;border-radius:50%;background:var(--gold-bg);
+  border:1px solid rgba(201,162,39,.3);display:flex;align-items:center;
+  justify-content:center;flex-shrink:0;font-size:16px}
+.case-result p{font-size:14.5px;color:#333;font-style:italic}
+
+/* TIMELINE */
+.timeline-s{background:var(--white);padding:88px 0}
+.tl{display:flex;flex-direction:column;gap:0;margin-top:48px}
+.tl-row{display:grid;grid-template-columns:100px 1fr;gap:0;align-items:stretch}
+.tl-circle-col{display:flex;flex-direction:column;align-items:center}
+.tl-circle{width:40px;height:40px;border-radius:50%;border:2px solid var(--gold);
+  background:white;display:flex;align-items:center;justify-content:center;
+  font-family:Georgia,serif;font-size:15px;color:var(--gold);flex-shrink:0}
+.tl-line{flex:1;width:1px;background:var(--border);margin:4px 0}
+.tl-row:last-child .tl-line{display:none}
+.tl-body{padding:0 0 36px 16px}
+.tl-chip{display:inline-block;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gold);font-weight:700;background:var(--gold-bg);padding:3px 10px;
+  border-radius:20px;margin-bottom:8px}
+.tl-body h3{font-family:Georgia,serif;font-size:20px;color:var(--navy);margin-bottom:8px}
+.tl-body p{font-size:14.5px;color:var(--fog);line-height:1.65}
+
+/* B2B — navy block OK here, it's a distinct section */
+.b2b{background:var(--navy);padding:88px 0}
+.b2b .s-label{color:rgba(201,162,39,.8)}
+.b2b .s-title{color:white}
+.b2b .s-sub{color:rgba(255,255,255,.55)}
+.b2b-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;margin-top:48px}
+.b2b-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;padding:28px 24px}
+.b2b-card h3{font-family:Georgia,serif;font-size:18px;color:white;margin-bottom:10px}
+.b2b-card p{font-size:14px;color:rgba(255,255,255,.55);line-height:1.65}
+.b2b-card .b2b-icon{font-size:28px;margin-bottom:14px}
+.b2b-cta{margin-top:48px;text-align:center}
+.b2b-cta p{font-size:16px;color:rgba(255,255,255,.55);margin-bottom:20px}
+
+/* CTA — gold bg, NOT navy (Repyev: readability on light bg) */
+.cta-s{background:var(--gold-bg);border-top:1px solid rgba(201,162,39,.25);
+  border-bottom:1px solid rgba(201,162,39,.25);padding:88px 0;text-align:center}
+.cta-s h2{font-size:clamp(28px,4vw,48px);color:var(--navy);margin-bottom:16px}
+.cta-s p{font-size:17px;color:#555;margin-bottom:36px;max-width:560px;margin-left:auto;margin-right:auto}
+.cta-s .btn-row{justify-content:center}
+.cta-ft{margin-top:18px;font-size:13px;color:var(--fog)}
+
+/* FOOTER */
+footer{background:var(--navy);padding:40px 0 32px}
+.footer-in{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.footer-logo{font-family:Georgia,serif;font-size:15px;color:rgba(255,255,255,.5)}
+.footer-logo em{color:var(--gold);font-style:normal}
+.footer-links{display:flex;gap:24px;list-style:none}
+.footer-links a{font-size:13px;color:rgba(255,255,255,.35);text-decoration:none}
+.footer-links a:hover{color:rgba(255,255,255,.7)}
+.footer-cr{font-size:12px;color:rgba(255,255,255,.25);margin-top:24px;text-align:center}
+
+/* ANIMATIONS */
+.js-on [data-anim]{opacity:0;transform:translateY(24px);transition:opacity .55s ease,transform .55s ease}
+.js-on [data-anim].visible{opacity:1;transform:none}
+.js-on [data-delay="1"]{transition-delay:.1s}
+.js-on [data-delay="2"]{transition-delay:.2s}
+.js-on [data-delay="3"]{transition-delay:.3s}
+.js-on [data-delay="4"]{transition-delay:.4s}
+.js-on [data-delay="5"]{transition-delay:.5s}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-in">
+    <a href="#" class="nav-logo">Мировоззрение <em>Роста</em></a>
+    <ul class="nav-ul">
+      <li><a href="#benefits">Что вы получите</a></li>
+      <li><a href="#cases">Кейсы</a></li>
+      <li><a href="#b2b">Для бизнеса</a></li>
+      <li><a href="#contact">Написать</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Получить портрет</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-ey">Психологический портрет личности</div>
+        <h1>Получите точную инструкцию к&nbsp;самому себе — и&nbsp;начните действовать в&nbsp;согласии со&nbsp;своей природой</h1>
+        <div class="hero-rule"></div>
+        <p class="hero-sub">Не очередной тест с&nbsp;типом личности. Комплексный анализ по&nbsp;5&nbsp;матрицам — вы&nbsp;узнаете, что вас заряжает, что гасит и&nbsp;как принимать решения без внутреннего сопротивления.</p>
+        <ul class="hero-list">
+          <li>Поймёте, какое «топливо» даёт вам энергию — и&nbsp;перестанете работать вхолостую</li>
+          <li>Увидите свои точки напряжения до&nbsp;того, как они станут проблемой</li>
+          <li>Получите конкретные инструменты управления собой, а&nbsp;не&nbsp;абстрактные рекомендации</li>
+        </ul>
+        <div class="btn-row">
+          <a href="#contact" class="btn btn-gold">Записаться на сессию</a>
+          <a href="#benefits" class="btn btn-ol">Узнать подробнее</a>
+        </div>
+        <p class="hero-ft">Работает с руководителями, предпринимателями и партнёрами по бизнесу</p>
+      </div>
+      <div class="hero-card">
+        <div class="hc-label">Пример профиля — фрагмент</div>
+        <div class="hc-title">Психологический портрет</div>
+        <div style="font-size:13px;color:var(--fog);margin-bottom:4px">7 радикалов характера</div>
+        <div class="hc-bars">
+          <div class="hc-bar-row">
+            <span class="hc-bar-label">Г</span>
+            <div class="hc-bar-track"><div class="hc-bar-fill" style="width:100%"></div></div>
+            <span class="hc-bar-val">100%</span>
+          </div>
+          <div class="hc-bar-row">
+            <span class="hc-bar-label">П</span>
+            <div class="hc-bar-track"><div class="hc-bar-fill" style="width:90%"></div></div>
+            <span class="hc-bar-val">90%</span>
+          </div>
+          <div class="hc-bar-row">
+            <span class="hc-bar-label">Эп</span>
+            <div class="hc-bar-track"><div class="hc-bar-fill" style="width:67%"></div></div>
+            <span class="hc-bar-val">67%</span>
+          </div>
+          <div class="hc-bar-row">
+            <span class="hc-bar-label">Т-М</span>
+            <div class="hc-bar-track"><div class="hc-bar-fill" style="width:17%"></div></div>
+            <span class="hc-bar-val">17%</span>
+          </div>
+          <div class="hc-bar-row">
+            <span class="hc-bar-label">Ш</span>
+            <div class="hc-bar-track"><div class="hc-bar-fill" style="width:33%"></div></div>
+            <span class="hc-bar-val">33%</span>
+          </div>
+        </div>
+        <div class="hc-chips">
+          <span class="hc-chip">Архетип: Стратег</span>
+          <span class="hc-chip">Мотивация: Влияние</span>
+          <span class="hc-chip">Канал: Дигитал</span>
+          <span class="hc-chip">Уровень: Жёлтый</span>
+        </div>
+        <div style="margin-top:16px;padding:12px 14px;background:var(--gold-bg);border-radius:8px;
+          border:1px solid rgba(201,162,39,.2)">
+          <div style="font-size:11px;color:var(--gold);font-weight:700;text-transform:uppercase;
+            letter-spacing:.1em;margin-bottom:4px">Ключевой вывод</div>
+          <p style="font-size:13px;color:#444;line-height:1.55">Вы работаете на идею и масштаб — без возможности зафиксировать личный вклад энергия падает, даже при хороших результатах.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF BAR -->
+<div class="proof">
+  <div class="wrap">
+    <div class="proof-in">
+      <div class="proof-item">
+        <div class="proof-num">100+</div>
+        <div class="proof-text">портретов составлено</div>
+      </div>
+      <div class="proof-item">
+        <div class="proof-num">5</div>
+        <div class="proof-text">матриц в одном портрете</div>
+      </div>
+      <div class="proof-item">
+        <div class="proof-num">7</div>
+        <div class="proof-text">модулей работы</div>
+      </div>
+      <div class="proof-item">
+        <div class="proof-num">90</div>
+        <div class="proof-text">дней персонального плана</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAIN POINTS -->
+<section class="pain" id="pain">
+  <div class="wrap">
+    <div class="s-label" data-anim>Узнаёте себя?</div>
+    <h2 class="s-title" data-anim>Вы сталкиваетесь с этим?</h2>
+    <div class="pain-grid">
+      <div class="pain-card" data-anim data-delay="1">
+        <div class="pain-icon">🔋</div>
+        <h3>Выгорание без видимой причины</h3>
+        <p>Вы много работаете, результаты есть — но энергии нет. Это не лень. Это работа без правильного «топлива» для вашего психотипа.</p>
+      </div>
+      <div class="pain-card" data-anim data-delay="2">
+        <div class="pain-icon">🔄</div>
+        <h3>Одни и те же решения</h3>
+        <p>Снова попадаете в похожую ситуацию — в отношениях, в работе, в партнёрстве. Потому что паттерн живёт глубже, чем кажется.</p>
+      </div>
+      <div class="pain-card" data-anim data-delay="3">
+        <div class="pain-icon">⚡</div>
+        <h3>Конфликты с командой или партнёром</h3>
+        <p>Вы не можете договориться. Кажется, что другой человек делает всё «неправильно». Но это структурный конфликт психотипов, а не личная несовместимость.</p>
+      </div>
+      <div class="pain-card" data-anim data-delay="4">
+        <div class="pain-icon">🎭</div>
+        <h3>Ощущение «не своего места»</h3>
+        <p>Успех есть, но внутри пусто. Роль, дело или окружение не совпадают с природным ядром — и тело это знает раньше, чем голова.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="benefits" id="benefits">
+  <div class="wrap">
+    <div class="s-label" data-anim>Что вы получите</div>
+    <h2 class="s-title" data-anim>После работы вы будете точно знать</h2>
+    <p class="s-sub" data-anim>Не расплывчатые советы — конкретные данные о вашей личности в форме рабочей инструкции.</p>
+    <div class="bene-grid">
+      <div class="bene-card" data-anim data-delay="1">
+        <div class="bene-num">01</div>
+        <h3>Что вас заряжает — и что гасит</h3>
+        <p>Ваше мотивационное топливо: идея, рекорд, влияние или причастность к команде. Плюс «пожиратели энергии», которые истощают именно вас — задолго до ощущения усталости.</p>
+      </div>
+      <div class="bene-card" data-anim data-delay="2">
+        <div class="bene-num">02</div>
+        <h3>Карту внутренних конфликтов</h3>
+        <p>Где ваши черты создают трение между собой — например, потребность в публичности при стремлении к глубине. Видите точки напряжения до того, как они стали проблемой.</p>
+      </div>
+      <div class="bene-card" data-anim data-delay="3">
+        <div class="bene-num">03</div>
+        <h3>Как работают ваши эмоции и скрытые мотивы</h3>
+        <p>Какое поведение — ваш осознанный выбор, а какое — автопилот из детских сценариев. Перейдёте от позиции «объекта обстоятельств» к позиции автора своей жизни.</p>
+      </div>
+      <div class="bene-card" data-anim data-delay="4">
+        <div class="bene-num">04</div>
+        <h3>Совместимость с партнёром или командой</h3>
+        <p>Кто дополняет вас по природе, а кто создаёт структурное трение. Как строить роли так, чтобы слабые места одного закрывались сильными сторонами другого.</p>
+      </div>
+      <div class="bene-card" data-anim data-delay="5">
+        <div class="bene-num">05</div>
+        <h3>Персональную стратегию на 90 дней</h3>
+        <p>Конкретные шаги — не универсальные советы, а инструкции под ваш психотип: как восстанавливаться, как ставить цели, как выстраивать решения в согласии с природой.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="s-label" data-anim>Как это работает</div>
+    <h2 class="s-title" data-anim>Три шага к вашему портрету</h2>
+    <div class="how-steps">
+      <div class="how-step" data-anim data-delay="1">
+        <div class="how-circle">1</div>
+        <h3>Диагностическая сессия</h3>
+        <p>2–3 часа глубинного интервью. Александр работает по авторской методике: вопросы, история решений, паттерны поведения. Никаких тестов-галочек.</p>
+      </div>
+      <div class="how-step" data-anim data-delay="2">
+        <div class="how-circle">2</div>
+        <h3>Анализ по 5 матрицам</h3>
+        <p>Составляется психологический портрет: 7 радикалов, Спиральная динамика, VAKD-профиль, мотивация, архетипы. Когда черта повторяется во всех пяти — это не случайность, это ваше ядро.</p>
+      </div>
+      <div class="how-step" data-anim data-delay="3">
+        <div class="how-circle">3</div>
+        <h3>Интерактивный отчёт + план</h3>
+        <p>Получаете подробный документ с визуализациями и персональную стратегию на 90 дней. Это рабочий инструмент, не красивая PDF-ка в стол.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="s-label" data-anim>Кто это делает</div>
+    <h2 class="s-title" data-anim>Александр Иванищев</h2>
+    <div class="about-grid">
+      <div data-anim>
+        <div class="about-avatar">А</div>
+      </div>
+      <div>
+        <div class="about-facts" data-anim>
+          <div class="about-fact">
+            <strong>100+</strong>
+            <span>психологических портретов</span>
+          </div>
+          <div class="about-fact">
+            <strong>5</strong>
+            <span>аналитических матриц в методике</span>
+          </div>
+          <div class="about-fact">
+            <strong>B2C + B2B</strong>
+            <span>частные и корпоративные клиенты</span>
+          </div>
+          <div class="about-fact">
+            <strong>Жёлтый</strong>
+            <span>уровень Спиральной динамики (88%)</span>
+          </div>
+        </div>
+        <div class="about-bio" data-anim>
+          <p>Я занимаюсь психологическим профилированием — не как терапевт, а как аналитик и стратег. Моя задача: перевести сложные данные о вашей личности в конкретные рабочие инструменты.</p>
+          <p>Методика основана на пересечении пяти систем анализа. Когда одна черта подтверждается в радикалах, Спиральной динамике, VAKD, мотивации и архетипах — это не мнение, это закономерность.</p>
+          <p>Работаю с предпринимателями, топ-менеджерами и бизнес-партнёрами, которым нужна ясность о себе — а не ещё один тест с красивыми картинками.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SYSTEM -->
+<section class="system" id="system">
+  <div class="wrap">
+    <div class="s-label" data-anim>Методика</div>
+    <h2 class="s-title" data-anim>5 матриц — что они дают простым языком</h2>
+    <p class="s-sub" data-anim>Ценность не в каждой матрице отдельно, а в их пересечении. Когда одна черта подтверждается в пяти системах — это не случайность.</p>
+    <div class="matrices-grid">
+      <div class="matrix-card" data-anim data-delay="1">
+        <div class="mc-num">Матрица 1</div>
+        <h3>7 радикалов характера</h3>
+        <p>Устойчивое ядро личности: что вы несёте в себе от природы, а не от обстоятельств. Здесь видно, почему вы так реагируете в стрессе.</p>
+      </div>
+      <div class="matrix-card" data-anim data-delay="2">
+        <div class="mc-num">Матрица 2</div>
+        <h3>Спиральная динамика</h3>
+        <p>Уровень ценностей и картина мира. Объясняет, почему с одними людьми вы на одной волне, а с другими — постоянное непонимание.</p>
+      </div>
+      <div class="matrix-card" data-anim data-delay="3">
+        <div class="mc-num">Матрица 3</div>
+        <h3>VAKD — каналы восприятия</h3>
+        <p>Как вы получаете и обрабатываете информацию. Позволяет выстраивать коммуникацию без искажений с первого раза.</p>
+      </div>
+      <div class="matrix-card" data-anim data-delay="4">
+        <div class="mc-num">Матрица 4</div>
+        <h3>Архетипы и мотивация</h3>
+        <p>Что вас по-настоящему заряжает: идея, рекорд, влияние, признание или причастность. Без этого любая цель рано или поздно гасит энергию.</p>
+      </div>
+      <div class="matrix-card" data-anim data-delay="5">
+        <div class="mc-num">Матрица 5</div>
+        <h3>Жизненные сценарии</h3>
+        <p>Какие решения вы принимаете «на автопилоте» — и является ли это выбором или унаследованным паттерном. Здесь начинается работа с позицией Автора.</p>
+      </div>
+    </div>
+    <div class="modules-note" data-anim>
+      <h3>Почему именно 7 модулей работы?</h3>
+      <p style="font-size:14.5px;color:var(--fog);margin-bottom:20px">Каждый модуль переводит данные в конкретный прикладной результат. Вы не просто узнаёте о себе — вы получаете инструмент для конкретной задачи.</p>
+      <div class="modules-list">
+        <div class="mod-item">Портрет личности — кто вы есть</div>
+        <div class="mod-item">Идеальный партнёр — какой человек вас дополняет</div>
+        <div class="mod-item">Совместимость — где синергия, где трение</div>
+        <div class="mod-item">Портрет жизни — как вы принимаете решения</div>
+        <div class="mod-item">Эмоциональный интеллект — управление состояниями</div>
+        <div class="mod-item">Автопилот и сценарии — осознанный выбор</div>
+        <div class="mod-item">Стратег позиций — план на 90 дней</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section class="cases" id="cases">
+  <div class="wrap">
+    <div class="s-label" data-anim>Реальные результаты</div>
+    <h2 class="s-title" data-anim>Три кейса — что изменилось</h2>
+    <div class="cases-list">
+
+      <div class="case-card" data-anim>
+        <div class="case-tag">Кейс 1 · CEO · 38 лет</div>
+        <div class="case-cols">
+          <div class="case-col">
+            <div class="case-col-label">Запрос</div>
+            <h4>«Я устаю от роли, хотя мой бизнес растёт»</h4>
+            <p>Михаил — основатель b2b-компании. Результаты отличные, команда работает. Но он выгорел и не понимал почему.</p>
+          </div>
+          <div class="case-col">
+            <div class="case-col-label">Что нашли</div>
+            <h4>Конфликт роли и психотипа</h4>
+            <p>Гипертимный радикал (высокая энергия, нужна смена задач) против роли CEO, которая требует стабильности и контроля. Михаил выполнял не свою функцию — с огромным внутренним сопротивлением.</p>
+          </div>
+          <div class="case-col">
+            <div class="case-col-label">Решение</div>
+            <h4>Перестроили роли внутри компании</h4>
+            <p>Операционное управление делегировали партнёру с высоким эпилептоидным профилем. Михаил сосредоточился на развитии и стратегии — своей природной зоне.</p>
+          </div>
+        </div>
+        <div class="case-result">
+          <div class="case-result-icon">✓</div>
+          <p>Через 3 месяца: энергия вернулась, конфликты с партнёром снизились, потому что каждый оказался «на своём месте» — обоснованно, а не по договорённости.</p>
+        </div>
+      </div>
+
+      <div class="case-card" data-anim>
+        <div class="case-tag">Кейс 2 · Топ-менеджер · 34 года</div>
+        <div class="case-cols">
+          <div class="case-col">
+            <div class="case-col-label">Запрос</div>
+            <h4>«Всё хорошо на бумаге — внутри пусто»</h4>
+            <p>Елена — директор по маркетингу в крупной компании. Карьера, зарплата, статус. Хроническая усталость и ощущение, что занимается не тем.</p>
+          </div>
+          <div class="case-col">
+            <div class="case-col-label">Что нашли</div>
+            <h4>Неправильное топливо и изоляция</h4>
+            <p>Архетип «Специалист» требует глубокого погружения и публичного признания своей экспертизы. В текущей роли — постоянное переключение и полная анонимность результатов.</p>
+          </div>
+          <div class="case-col">
+            <div class="case-col-label">Решение</div>
+            <h4>Перенастроили среду и формат</h4>
+            <p>Переговорила с руководством о выступлениях, экспертных статьях, видимости бренда. Плюс — персональный список способов восстановления для её психотипа.</p>
+          </div>
+        </div>
+        <div class="case-result">
+          <div class="case-result-icon">✓</div>
+          <p>Через 6 недель: ощущение пустоты прошло. Изменилась не работа — изменилась среда и видимость личного вклада.</p>
+        </div>
+      </div>
+
+      <div class="case-card" data-anim>
+        <div class="case-tag">Кейс 3 · Бизнес-партнёры · Совместный портрет</div>
+        <div class="case-cols">
+          <div class="case-col">
+            <div class="case-col-label">Запрос</div>
+            <h4>«Мы постоянно спорим о том, как делать»</h4>
+            <p>Андрей и Ольга — основатели IT-компании. Оба умные, оба правы по-своему. Конфликты по методам замедляли все решения.</p>
+          </div>
+          <div class="case-col">
+            <div class="case-col-label">Что нашли</div>
+            <h4>Структурный конфликт, не личный</h4>
+            <p>Андрей — Параноидный + Гипертимный (скорость, масштаб). Ольга — Эпилептоидный (порядок, контроль). Они конкурировали за «как правильно» вместо того, чтобы использовать разность.</p>
+          </div>
+          <div class="case-col">
+            <div class="case-col-label">Решение</div>
+            <h4>Письменный протокол ролей</h4>
+            <p>Зафиксировали зоны полномочий: Андрей — стратегия и масштабирование, Ольга — операционный процесс. Разногласия перестали быть личными — стали функциональными.</p>
+          </div>
+        </div>
+        <div class="case-result">
+          <div class="case-result-icon">✓</div>
+          <p>Ключевой инсайт: конфликт был не о бизнесе. Это был конфликт разных скоростей и разных природных потребностей — и его можно было спроектировать заранее.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-s" id="timeline">
+  <div class="wrap">
+    <div class="s-label" data-anim>Как устроен путь</div>
+    <h2 class="s-title" data-anim>От сессии до результата — 5 шагов</h2>
+    <div class="tl">
+      <div class="tl-row" data-anim>
+        <div class="tl-circle-col"><div class="tl-circle">1</div><div class="tl-line"></div></div>
+        <div class="tl-body">
+          <span class="tl-chip">Начало</span>
+          <h3>Диагностическая сессия</h3>
+          <p>2–3 часа. Глубинное интервью: история решений, паттерны поведения, ключевые события. Никаких тестов — только живой разговор.</p>
+        </div>
+      </div>
+      <div class="tl-row" data-anim>
+        <div class="tl-circle-col"><div class="tl-circle">2</div><div class="tl-line"></div></div>
+        <div class="tl-body">
+          <span class="tl-chip">3–5 дней</span>
+          <h3>Анализ и составление портрета</h3>
+          <p>Александр обрабатывает данные, находит пересечения по 5 матрицам. Фиксируется устойчивое ядро — не временное состояние, а фундаментальные особенности.</p>
+        </div>
+      </div>
+      <div class="tl-row" data-anim>
+        <div class="tl-circle-col"><div class="tl-circle">3</div><div class="tl-line"></div></div>
+        <div class="tl-body">
+          <span class="tl-chip">Сессия разбора</span>
+          <h3>Презентация портрета</h3>
+          <p>Вы получаете интерактивный отчёт с визуализациями — 15 слайдов с данными, графиками и конкретными выводами. Разбираем вместе, отвечаю на вопросы.</p>
+        </div>
+      </div>
+      <div class="tl-row" data-anim>
+        <div class="tl-circle-col"><div class="tl-circle">4</div><div class="tl-line"></div></div>
+        <div class="tl-body">
+          <span class="tl-chip">Углублённая работа</span>
+          <h3>7 модулей — по вашим задачам</h3>
+          <p>Дальше работаем по тем модулям, которые нужны именно вам: партнёрство, командная динамика, стратегия, эмоциональный профиль. Не все 7 — только актуальные.</p>
+        </div>
+      </div>
+      <div class="tl-row" data-anim>
+        <div class="tl-circle-col"><div class="tl-circle">5</div><div class="tl-line"></div></div>
+        <div class="tl-body">
+          <span class="tl-chip">Итог</span>
+          <h3>Персональная стратегия на 90 дней</h3>
+          <p>Конкретный план с точками контроля. Как восстанавливаться, как выстраивать решения, как ставить цели — всё под ваш психотип, не универсальные советы.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- B2B -->
+<section class="b2b" id="b2b">
+  <div class="wrap">
+    <div class="s-label" data-anim>Для бизнеса</div>
+    <h2 class="s-title" data-anim>От управления по&nbsp;интуиции — к&nbsp;проектированию команды</h2>
+    <p class="s-sub" data-anim>Психологический портрет превращает управление сотрудниками из режима догадок в режим стратегического дизайна — где каждый работает в позиции, совпадающей с его природой.</p>
+    <div class="b2b-grid">
+      <div class="b2b-card" data-anim data-delay="1">
+        <div class="b2b-icon">🎯</div>
+        <h3>Расстановка кадров</h3>
+        <p>Не просто нанять специалиста — вписать его в систему. Сотрудник с эпилептоидным радикалом на позиции контролёра соблюдает стандарты не из страха, а из природной потребности.</p>
+      </div>
+      <div class="b2b-card" data-anim data-delay="2">
+        <div class="b2b-icon">⚙️</div>
+        <h3>Профилактика выгорания</h3>
+        <p>Выгорание наступает не от объёма, а от отсутствия правильного топлива. Зная психотип — настраиваете среду заранее, не восстанавливаете после срыва.</p>
+      </div>
+      <div class="b2b-card" data-anim data-delay="3">
+        <div class="b2b-icon">🤝</div>
+        <h3>Партнёрство без конкуренции</h3>
+        <p>Два человека с архетипом «Директор» — это конкуренция за «как правильно», если не зафиксированы границы полномочий. Портрет даёт аргументированное распределение ролей.</p>
+      </div>
+      <div class="b2b-card" data-anim data-delay="4">
+        <div class="b2b-icon">📈</div>
+        <h3>Экономический эффект</h3>
+        <p>Замена выгоревшего ключевого сотрудника — несколько его годовых окладов. Удержание через среду, которая заряжает, а не истощает — дешевле. Снижение ФОТ без потери людей.</p>
+      </div>
+    </div>
+    <div class="b2b-cta">
+      <p>Работаю с командами от 2 человек. Формат: диагностика + матрица совместимости + протокол ролей.</p>
+      <a href="#contact" class="btn btn-gold">Обсудить формат для команды</a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA — gold bg, readable, NOT navy -->
+<section class="cta-s" id="contact">
+  <div class="wrap">
+    <div class="s-label" data-anim>Следующий шаг</div>
+    <h2 data-anim>Готовы получить инструкцию к&nbsp;самому себе?</h2>
+    <p data-anim>Запишитесь на бесплатную 20-минутную встречу. Разберём вашу ситуацию и обсудим, какой формат работы подходит.</p>
+    <div class="btn-row" data-anim>
+      <a href="https://t.me/alexanderivanishev" class="btn btn-gold">Написать в Telegram</a>
+    </div>
+    <p class="cta-ft" data-anim>Работаю с ограниченным числом клиентов одновременно</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-in">
+      <div class="footer-logo">Мировоззрение <em>Роста</em></div>
+      <ul class="footer-links">
+        <li><a href="#benefits">Что вы получите</a></li>
+        <li><a href="#cases">Кейсы</a></li>
+        <li><a href="#b2b">Для бизнеса</a></li>
+        <li><a href="#contact">Написать</a></li>
+      </ul>
+    </div>
+    <p class="footer-cr">© 2025 Александр Иванищев · Мировоззрение Роста · Психологическое консультирование</p>
+  </div>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') })
+}, {threshold: 0.12, rootMargin:'0px 0px -40px 0px'})
+document.querySelectorAll('[data-anim]').forEach(el => obs.observe(el))
+</script>
+</body>
+</html>
