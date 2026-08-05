@@ -163,14 +163,14 @@ body{font-family:var(--font-body);color:var(--gray-700);background:var(--navy);l
       <div class="preview-demo__label">Так будет выглядеть твой результат</div>
       <div class="brow">
         <div class="brow__top">
-          <div><span class="brow__name">Жёлтый</span><span class="brow__sub">Свобода, системное мышление</span></div>
+          <div><span class="brow__name" data-term="yellow">Жёлтый</span><span class="brow__sub">Свобода, системное мышление</span></div>
           <span class="brow__pct" style="color:#C9A227">82%</span>
         </div>
         <div class="bbar"><div class="bbar__fill" style="width:82%;background:#C9A227"></div></div>
       </div>
       <div class="brow">
         <div class="brow__top">
-          <div><span class="brow__name">Оранжевый</span><span class="brow__sub">Результат, конкуренция</span></div>
+          <div><span class="brow__name" data-term="orange">Оранжевый</span><span class="brow__sub">Результат, конкуренция</span></div>
           <span class="brow__pct" style="color:#D2792E">64%</span>
         </div>
         <div class="bbar"><div class="bbar__fill" style="width:64%;background:#D2792E"></div></div>
@@ -228,6 +228,45 @@ body{font-family:var(--font-body);color:var(--gray-700);background:var(--navy);l
 // ════════════════════════════════════════════════════════════════
 const SUPABASE_URL = "";       // пример: "https://abcxyz.supabase.co"
 const SUPABASE_ANON_KEY = "";  // пример: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+
+// ─── BRANDED TERMS LAYER ──────────────────────────────────────────────────────
+const BRANDED_TERMS = {
+  // Ступени Роста (Спиральная динамика)
+  red:   {name:"Воля",          sub:"Сила, импульс, доминирование"},
+  blue:  {name:"Основа",        sub:"Структура, правила, стабильность"},
+  orange:{name:"Движение",      sub:"Результат, рост, прагматизм"},
+  green: {name:"Поле",          sub:"Люди, гармония, принадлежность"},
+  yellow:{name:"Горизонт",      sub:"Синтез, системность, смыслы"},
+  // 7 Природ (Радикалы)
+  hyst:  {name:"Маяк",          sub:"Яркость, влияние, внимание"},
+  epi:   {name:"Зодчий",        sub:"Контроль, порядок, мастерство"},
+  para:  {name:"Командор",      sub:"Цель, воля, миссия"},
+  emo:   {name:"Проводник",     sub:"Эмпатия, гармония, глубина"},
+  schiz: {name:"Мыслитель",     sub:"Оригинальность, идеи, дистанция"},
+  hyper: {name:"Первопроходец", sub:"Энергия, новизна, движение"},
+  anx:   {name:"Хранитель",     sub:"Ответственность, тщательность"},
+  // Каналы восприятия (VAKD)
+  vis:   {name:"Образный",      sub:"Образы, схемы, текст"},
+  aud:   {name:"Ритмичный",     sub:"Звук, речь, разговор"},
+  kin:   {name:"Телесный",      sub:"Действие, тело, практика"},
+  dig:   {name:"Логический",    sub:"Система, структура, цифры"},
+}
+function applyTermMode() {
+  if ((localStorage.getItem('term_mode') || 'original') !== 'branded') return
+  for (const mkey of Object.keys(MATRICES)) {
+    const cats = MATRICES[mkey].cats
+    for (const ckey of Object.keys(cats)) {
+      if (BRANDED_TERMS[ckey]) {
+        cats[ckey].name = BRANDED_TERMS[ckey].name
+        cats[ckey].sub  = BRANDED_TERMS[ckey].sub
+      }
+    }
+  }
+  document.querySelectorAll('[data-term]').forEach(el => {
+    const k = el.dataset.term
+    if (BRANDED_TERMS[k]) el.textContent = BRANDED_TERMS[k].name
+  })
+}
 
 // SQL для создания таблицы в Supabase (выполни один раз в SQL Editor):
 // create table test_results (
@@ -918,6 +957,7 @@ $("inp-name").addEventListener("input", () => {
   try { localStorage.setItem(LS_NAME_KEY, $("inp-name").value.trim()); } catch(e){}
 });
 
+applyTermMode()
 buildMenu();
 $("choice-top").addEventListener("click", ()=>choose("top"));
 $("choice-bottom").addEventListener("click", ()=>choose("bottom"));
